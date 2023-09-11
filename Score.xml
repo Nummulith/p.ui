@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<Score Name="" Duration="2500" Index="1">
+	<Part Name="Bass" Numerator="5" Denominator="8" Index="0">
+		<Stave Name="s0c1---" Build="X1" Condition="zs!0" Index="0">
+			<Note Column="1" Fxl="4" Pos="0" Pow="S"/>
+			<Note Column="3" Fxl="1" Pos="0" Pow="x"/>
+			<Note Column="4" Fxl="2" Pos="0" Pow="S"/>
+		</Stave>
+		<Stave Name="Nmmm1" Build="Zaq" Condition="z#0" Index="-1">
+			<Note Column="1" Fxl="2" Pos="A" Pow="D"/>
+			<Note Column="2" Fxl="1" Pos="0" Pow="S"/>
+			<Note Column="3" Fxl="1" Pos="0" Pow="z"/>
+		</Stave>
+	</Part>
+	<Part Name="Drums" Numerator="7" Denominator="8" Index="1">
+		<Stave Name="s0c2" Build="X" Condition="pos!0" Index="0">
+			<Note Column="1" Fxl="1" Pos="0" Pow="S"/>
+			<Note Column="2" Fxl="5" Pos="7" Pow="9"/>
+			<Note Column="0" Fxl="1" Pos="d" Pow="u"/>
+		</Stave>
+		<Stave Name="Nmmm" Build="Y" Condition="pos#0" Index="1">
+			<Note Column="1" Fxl="2" Pos="A" Pow="D"/>
+			<Note Column="2" Fxl="1" Pos="0" Pow="S"/>
+			<Note Column="3" Fxl="1" Pos="0" Pow="TT"/>
+		</Stave>
+	</Part>
+</Score>
