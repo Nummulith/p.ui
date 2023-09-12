@@ -377,13 +377,6 @@ QTableWidget::item {
            </layout>
           </item>
           <item>
-           <widget class="QPushButton" name="printdivider">
-            <property name="text">
-             <string>print divider</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <spacer name="verticalSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>

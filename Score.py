@@ -15,6 +15,10 @@ class Score:
         self.Name = Name
         self.Duration = 2100
 
+    @staticmethod
+    def next():
+        return Part
+
 class Part:
     def __init__(self, Name="", Numerator=4, Denominator=8):
         self.Items = []
@@ -23,7 +27,15 @@ class Part:
         self.Name = Name
         self.Numerator = Numerator
         self.Denominator = Denominator
-#####
+
+    @staticmethod
+    def prev():
+        return Score
+
+    @staticmethod
+    def next():
+        return Stave
+
 class Stave:
     def __init__(self, Build="", Name="", Condition=""):
         self.Items = []
@@ -33,12 +45,24 @@ class Stave:
         self.Build = Build
         self.Condition = Condition
 
+    @staticmethod
+    def prev():
+        return Part
+
+    @staticmethod
+    def next():
+        return Note
+
 class Note:
     def __init__(self, Column=0, Fxl="", Pos="", Pow=""):
         self.Column = Column
         self.Fxl = Fxl
         self.Pos = Pos
         self.Pow = Pow
+
+    @staticmethod
+    def prev():
+        return Stave
 
 
 class Map:
@@ -162,9 +186,6 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
 
 
-        self.printdivider.clicked.connect(self.PrintDivider)
-
-
         # visibility buttons 
 
         panels = []
@@ -232,24 +253,40 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         self.Maps[Note ] = Map(self, Note )
 #        self.Maps[Score].FillModel(self.Score)
 
-    def Position(self, clss, fillList = False, curind = None):
+        self.Objs = {}
+
+    def Position(self, clss, fillList = False, index = None):
+        curmap = self.Maps[clss]
+
         if   clss == Score :
-            obj = None
+            par = None
             items = self.Score
             curind = 0
-        elif clss != Note :
-            obj = items[curind] if curind != -1 else None
-            items  = obj.Items
-#            curind = int(obj.Index)
-            obj.Index = curind
+        else: #if clss != Note 
+            par = self.Objs[clss.prev()]
+            items  = par.Items
+            if index == None:
+                curind = int(par.Index)
+            else:
+                curind = index[0] if isinstance(index, list) else index
+                par.Index = curind
+
+        self.Objs[clss] = items[curind]
 
         empty = len(items) == 0
+
+
+        if fillList:
+            curmap.FillModel(items)
+
+        curmap.PosModel(curind)
+
 
         if   clss == Part:
             
             self.PartsList .itemSelectionChanged.disconnect()
 
-            if fillList :
+            if fillList:
                 self.PartsList.clear()
 
                 for part in items:
@@ -261,6 +298,8 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
         elif clss == Stave:
 
+            self.StavesList.itemSelectionChanged.disconnect()
+
             if fillList :
                 self.StavesList.clear()
                 #self.StavesTable.setRowCount(0)
@@ -269,7 +308,11 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
             self.StavesList.setCurrentRow(curind)
             
+            self.StavesList.itemSelectionChanged.connect(self.StavesSelectionChanged)
+
         elif clss == Note:
+
+            self.NotesList.itemSelectionChanged.disconnect()
 
             if fillList :
                 self.NotesList.clear()
@@ -287,96 +330,14 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
                 #self.NotesList.addItem("(")
                 #self.NotesList.insertItem(0, ")")
 
-                self.NotesList .setCurrentRow(curind)
+            self.NotesList.setCurrentRow(curind)
 
+            self.NotesList.itemSelectionChanged.connect(self.NotesSelectionChanged)
 
+        if clss != Note:
+            nxtind = index[1] if isinstance(index, list) else None
+            self.Position(clss.next(), True, nxtind)
 
-        #        if not fromthis:
-        #            curmap.FillModel(items)
-        # Position()
-        # map.PosModel(curind)
-
-    def Position____________withloop(self, clss, index):
-        print("<", clss, index, PrintCallStack())
-#        PrintCallStack1()
-#        traceback.print_exc()
-
-        # Model and lists
-
-        obj = None
-        items = self.Score
-        curind = 0
-        already = False
-        empty = False
-        for curclss, curmap in self.Maps.items():
-            
-            fromthis = curclss == clss
-
-            if not already and fromthis:
-                already = True
-                curind = index
-
-            if not empty:
-                empty = len(items) == 0
-
-            if already:
-                if not fromthis:
-                    curmap.FillModel(items)
-
-                if   curclss == Part:
-                    
-                    self.PartsList .itemSelectionChanged.disconnect()
-                    self.PartsList.clear()
-                    self.PartsList .itemSelectionChanged.connect(self.PartsSelectionChanged)
-
-                    for part in items:
-                        self.PartsList.addItem(part.Name)
-
-                elif curclss == Stave:
-
-                    self.StavesList.clear()
-                    
-                    #self.StavesTable.setRowCount(0)
-                    for stave in items:
-                        self.StavesList.addItem(stave.Name)
-
-                elif curclss == Note:
-
-                    self.NotesList.clear()
-
-                    #list1 = [1, 2, 3]
-                    #list2 = ['a', 'b', 'c']
-
-                    #for item1, item2 in zip(list1, list2):
-                    #    print(item1, item2)
-
-                    for i, note in zip(range(0, len(items)), items):
-                        self.NotesList.addItem(f"{note.Column}: {note.Fxl} {note.Pos} {note.Pow}")
-                        #self.NotesList.insertItem(0, ")")
-
-                    #self.NotesList.addItem("(")
-                    #self.NotesList.insertItem(0, ")")
-
-                if not empty:
-                    if curclss != Score:
-                        obj.Index = curind
-
-                    curmap.PosModel(curind)
-
-                    if  (curclss == Part ):
-                        self.PartsList .setCurrentRow(curind)
-
-                    elif(curclss == Stave):
-                        self.StavesList.setCurrentRow(curind)
-
-                    elif(curclss == Note ):
-                        self.NotesList .setCurrentRow(curind)
-
-            if not empty:
-                obj = items[curind] if curind != -1 else None
-                if curclss != Note :
-                    items  = obj.Items
-                    curind = int(obj.Index)
 
     def DrawStavesTable(self):
         curscore = self.Score[0]
@@ -392,7 +353,6 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         curstr = -1
         for curstave in curpart.Items:
             curstr += 1
-            #print(f"{curstave.Name}")
 
             curstrcount = self.StavesTable.rowCount()
             self.StavesTable.insertRow(curstrcount)
@@ -400,19 +360,6 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
             item = QtWidgets.QTableWidgetItem(curstave.Name)
             self.StavesTable.setVerticalHeaderItem(curstrcount, item)
-
-
-            #item = self.StavesTable.verticalHeaderItem(curstrcount)
-            #item.setText(stave.Name)
-            #self.StavesTable.setCurrentCell(currow, curind)
-
-            #item = QtWidgets.QTableWidgetItem("O")
-            #item.setTextAlignment(QtCore.Qt.AlignVCenter)
-            #item.setBackground(QtGui.QColor(255, 0, 0))  # Красный фон
-            #item.setTextAlignment(QtCore.Qt.AlignVCenter)
-            #item.setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEditable)  # Разрешаем редактирование
-            #self.StavesTable.setItem(pos, 0, item)
-
 
             for curnote in curstave.Items:
                 
@@ -432,8 +379,6 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
                 item = QtWidgets.QTableWidgetItem(curnote.Fxl + curnote.Pos + curnote.Pow)
                 self.StavesTable.setItem(curstr, curcol, item)
-
-                #print(f"  {curnote.Column}")
 
         self.PosStavesTable()
 
@@ -464,11 +409,11 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         self.PosStavesTable()
 
     def StavesTableCellClicked(self, row, col):
-        self.Position(Stave, False, row)
+#        self.Position(Stave, False, row)
 
         curscore = self.Score[0]
-        curpart  = curscore.Items[curscore.Index]
-        curstave = curpart .Items[curpart .Index]
+        curpart  = curscore.Items[int(curscore.Index)]
+        curstave = curpart .Items[row] # int(curpart .Index)
 
         ind = -1
         curind = -1
@@ -479,7 +424,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
                 ind = curind
                 break
         
-        self.Position(Note, False, ind)
+        self.Position(Stave, False, [row, ind])
 
 
     def SomeDrafts_________________(self):
@@ -494,8 +439,17 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
             item = QtWidgets.QTableWidgetItem(stave.Name)
             self.StavesTable.setVerticalHeaderItem(pos, item)
 
-    def PrintDivider(self):
-        print("------------------------------------------")
+            #item = self.StavesTable.verticalHeaderItem(curstrcount)
+            #item.setText(stave.Name)
+            #self.StavesTable.setCurrentCell(currow, curind)
+
+            #item = QtWidgets.QTableWidgetItem("O")
+            #item.setTextAlignment(QtCore.Qt.AlignVCenter)
+            #item.setBackground(QtGui.QColor(255, 0, 0))  # Красный фон
+            #item.setTextAlignment(QtCore.Qt.AlignVCenter)
+            #item.setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEditable)  # Разрешаем редактирование
+            #self.StavesTable.setItem(pos, 0, item)
+
 
     def LoadScorePreset(self):
         self.Score = []

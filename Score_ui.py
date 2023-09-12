@@ -322,11 +322,6 @@ class Ui_pApp(object):
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
 
-        self.printdivider = QPushButton(self.frame3)
-        self.printdivider.setObjectName(u"printdivider")
-
-        self.verticalLayout_2.addWidget(self.printdivider)
-
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_2.addItem(self.verticalSpacer)
@@ -381,6 +376,5 @@ class Ui_pApp(object):
         self.label_5.setText(QCoreApplication.translate("pApp", u"Note", None))
         self.label_13.setText(QCoreApplication.translate("pApp", u"Column", None))
         self.label_14.setText(QCoreApplication.translate("pApp", u"Fxl, Pos, Pow", None))
-        self.printdivider.setText(QCoreApplication.translate("pApp", u"print divider", None))
     # retranslateUi
 
