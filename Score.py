@@ -1,115 +1,11 @@
-import xml.etree.ElementTree as ET
-#import traceback
-import linecache
-import inspect
-from xml.dom import minidom
 from PyQt5 import QtWidgets, QtCore, uic, QtGui
 
-CELL_SIZE = 45
+from xml.dom import minidom
+import xml.etree.ElementTree as ET
 
-class Score:
-    def __init__(self, Name=""):
-        self.Items = []
-        self.Index = -1
+import linecache
+import inspect
 
-        self.Name = Name
-        self.Duration = 2100
-
-    @staticmethod
-    def next():
-        return Part
-
-class Part:
-    def __init__(self, Name="", Numerator=4, Denominator=8):
-        self.Items = []
-        self.Index = -1
-
-        self.Name = Name
-        self.Numerator = Numerator
-        self.Denominator = Denominator
-
-    @staticmethod
-    def prev():
-        return Score
-
-    @staticmethod
-    def next():
-        return Stave
-
-class Stave:
-    def __init__(self, Build="", Name="", Condition=""):
-        self.Items = []
-        self.Index = -1
-
-        self.Name  = Name
-        self.Build = Build
-        self.Condition = Condition
-
-    @staticmethod
-    def prev():
-        return Part
-
-    @staticmethod
-    def next():
-        return Note
-
-class Note:
-    def __init__(self, Column=0, Fxl="", Pos="", Pow=""):
-        self.Column = Column
-        self.Fxl = Fxl
-        self.Pos = Pos
-        self.Pow = Pow
-
-    @staticmethod
-    def prev():
-        return Stave
-
-
-class Map:
-    def __init__(self, wnd, clss):
-        self.Class = clss
-        self.Dict = []
-        el = clss()
-        for key in list(el.__dict__.keys()):
-            if key.startswith('__') \
-                or key == "Items"\
-                or key == "Index"\
-                or isinstance(getattr(el, key), list)\
-            :
-                continue
-            self.Dict.append(key)
-
-        self.Mapper = QtWidgets.QDataWidgetMapper(wnd)
-        self.Mapper.setModel(QtGui.QStandardItemModel())
-
-        for attr_index, attr_name in enumerate(self.Dict):
-            cl_attr_name = el.__class__.__name__ + "_" + attr_name
-            if hasattr(wnd, cl_attr_name):
-                widget = getattr(wnd, cl_attr_name)
-                if isinstance(widget, QtWidgets.QWidget):
-                    self.Mapper.addMapping(widget, attr_index)
-
-                    #widget.editingFinished.connect(wnd.updateModel)
-                    handler = lambda m=self.Mapper, a=attr_name, w=widget: wnd.updateModel(m, a, w)
-                    widget.editingFinished.connect(handler)
-
-    def FillModel(self, arr):
-        self.Mapper.model().clear()
-        for inst in arr:
-            self.Mapper.model().appendRow([QtGui.QStandardItem(str(getattr(inst, value))) for value in self.Dict])
-
-    def IsEmpty(self):
-        return self.Mapper.model().rowCount() == 0
-
-    def PosModel(self, index):
-        max = self.Mapper.model().rowCount() - 1
-
-        if index < 0 or index > max:
-            return False
-        
-        self.Mapper.setCurrentIndex(index)
-
-        return True
 
 def PrintCallStack():
 
@@ -136,7 +32,6 @@ def PrintCallStack():
 
     return res
 
-
 def PrintCallStack1():
     # Получаем список фреймов стека вызовов
     frames = inspect.getouterframes(inspect.currentframe())
@@ -154,6 +49,182 @@ def PrintCallStack1():
         print(f"File: {filename}, Line: {line_number}, Function: {function_name}")
         print(f"Code Line: {code_line.strip()}")  # Выводим строку кода без символа новой строки
 
+def find_column(Matrix, name):
+    # Ищем индекс колонки по имени
+    for column in range(Matrix.columnCount()):
+        header_item = Matrix.horizontalHeaderItem(column)
+        if header_item.text() == name:
+            return column
+    return -1  # Возвращаем -1, если колонка с таким именем не найдена
+
+def prettify(elem):
+    """Возвращает красиво отформатированный XML-элемент"""
+    rough_string = ET.tostring(elem, "utf-8")
+    reparsed = minidom.parseString(rough_string)
+    return reparsed.toprettyxml(indent="\t")
+
+def print_widget_hierarchy(widget, indent=0):
+    # не печатает лейауты ((
+    print("  " * indent + "-" + widget.objectName() + " (" + widget.metaObject().className() + ")")
+
+    for child_widget in widget.findChildren(QtWidgets.QWidget):
+        if child_widget.parent() == widget:  # Check if the child's parent is the widget itself
+            print_widget_hierarchy(child_widget, indent + 1)
+
+def SomeDrafts_________________(self):
+    currow = -1
+    curcol = -1
+    indexes = self.StavesTable.selectedIndexes()
+    if len(indexes) > 0:
+        currow = indexes[0].row()
+        curcol = indexes[0].column()
+
+    if False:
+        item = QtWidgets.QTableWidgetItem(stave.Name)
+        self.StavesTable.setVerticalHeaderItem(pos, item)
+
+        #item = self.StavesTable.verticalHeaderItem(curstrcount)
+        #item.setText(stave.Name)
+        #self.StavesTable.setCurrentCell(currow, curind)
+
+        #item = QtWidgets.QTableWidgetItem("O")
+        #item.setTextAlignment(QtCore.Qt.AlignVCenter)
+        #item.setBackground(QtGui.QColor(255, 0, 0))  # Красный фон
+        #item.setTextAlignment(QtCore.Qt.AlignVCenter)
+        #item.setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEditable)  # Разрешаем редактирование
+        #self.StavesTable.setItem(pos, 0, item)
+
+            #list1 = [1, 2, 3]
+            #list2 = ['a', 'b', 'c']
+            #for item1, item2 in zip(list1, list2):
+            #    print(item1, item2)
+            #self.NotesList.addItem("(")
+            #self.NotesList.insertItem(0, ")")
+
+
+CELL_SIZE = 45
+
+class Score:
+    def __init__(self, Name=""):
+        self.Items = []
+        self.Index = -1
+
+        self.Name = Name
+        self.Duration = 2100
+
+    @staticmethod
+    def next():
+        return Part
+
+class Part:
+    def __init__(self, Name="", Numerator=4, Denominator=8):
+        self.Items = []
+        self.Index = -1
+
+        self.Name = Name
+        self.Numerator = Numerator
+        self.Denominator = Denominator
+
+    def View(self):
+        return self.Name
+    
+    @staticmethod
+    def prev():
+        return Score
+
+    @staticmethod
+    def next():
+        return Stave
+
+class Stave:
+    def __init__(self, Build="", Name="", Condition=""):
+        self.Items = []
+        self.Index = -1
+
+        self.Name  = Name
+        self.Build = Build
+        self.Condition = Condition
+
+    def View(self):
+        return self.Name
+    
+    @staticmethod
+    def prev():
+        return Part
+
+    @staticmethod
+    def next():
+        return Note
+
+class Note:
+    def __init__(self, Column=0, Fxl="", Pos="", Pow=""):
+        self.Column = Column
+        self.Fxl = Fxl
+        self.Pos = Pos
+        self.Pow = Pow
+
+    @staticmethod
+    def prev():
+        return Stave
+    
+    def View(self):
+        return f"{self.Column}: {self.CellView()}"
+    
+    def CellView(self):
+        return f"{self.Fxl} {self.Pos} {self.Pow}"
+
+
+class Map:
+    def __init__(self, wnd, clss, vallist = None):
+        self.Class = clss
+        self.List = vallist
+        self.Dict = []
+        el = clss()
+        for key in list(el.__dict__.keys()):
+            if key.startswith('__') \
+                or key == "Items"\
+                or key == "Index"\
+                or isinstance(getattr(el, key), list)\
+            :
+                continue
+            self.Dict.append(key)
+
+        self.Mapper = QtWidgets.QDataWidgetMapper(wnd)
+        self.Mapper.setModel(QtGui.QStandardItemModel())
+
+        for attr_index, attr_name in enumerate(self.Dict):
+            cl_attr_name = el.__class__.__name__ + "_" + attr_name
+            if hasattr(wnd, cl_attr_name):
+                widget = getattr(wnd, cl_attr_name)
+                if isinstance(widget, QtWidgets.QWidget):
+                    self.Mapper.addMapping(widget, attr_index)
+
+                    handler = lambda c=self.Class, a=attr_name, w=widget: wnd.updateObject(c, a, w)
+                    widget.editingFinished.connect(handler)
+
+    def FillModel(self, items):
+        self.Mapper.model().clear()
+        for inst in items:
+            self.Mapper.model().appendRow([QtGui.QStandardItem(str(getattr(inst, value))) for value in self.Dict])
+
+    def IsEmpty(self):
+        return self.Mapper.model().rowCount() == 0
+
+    def PosModel(self, wnd, index):
+#        max = self.Mapper.model().rowCount() - 1
+#        if index < 0 or index > max:
+#            return False
+
+        self.Mapper.setCurrentIndex(index)
+
+        if index == -1: # empty cell
+            for attr_name in self.Dict:
+                cl_attr_name = self.Class.__name__ + "_" + attr_name
+                wgt = getattr(wnd, cl_attr_name)
+                if isinstance(wgt, QtWidgets.QSpinBox):
+                    wgt.setValue(0)
+                elif isinstance(wgt, QtWidgets.QLineEdit):
+                    wgt.setText("")
 
 
 class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
@@ -248,9 +319,9 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
     def InitMaps(self):
         self.Maps = {}
         self.Maps[Score] = Map(self, Score)
-        self.Maps[Part ] = Map(self, Part )
-        self.Maps[Stave] = Map(self, Stave)
-        self.Maps[Note ] = Map(self, Note )
+        self.Maps[Part ] = Map(self, Part , self.PartsList )
+        self.Maps[Stave] = Map(self, Stave, self.StavesList)
+        self.Maps[Note ] = Map(self, Note , self.NotesList )
 #        self.Maps[Score].FillModel(self.Score)
 
         self.Objs = {}
@@ -271,7 +342,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
                 curind = index[0] if isinstance(index, list) else index
                 par.Index = curind
 
-        self.Objs[clss] = items[curind]
+        self.Objs[clss] = items[curind] if curind != -1 else None
 
         empty = len(items) == 0
 
@@ -279,7 +350,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         if fillList:
             curmap.FillModel(items)
 
-        curmap.PosModel(curind)
+        curmap.PosModel(self, curind)
 
 
         if   clss == Part:
@@ -317,18 +388,9 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
             if fillList :
                 self.NotesList.clear()
 
-                #list1 = [1, 2, 3]
-                #list2 = ['a', 'b', 'c']
-
-                #for item1, item2 in zip(list1, list2):
-                #    print(item1, item2)
-
                 for i, note in zip(range(0, len(items)), items):
-                    self.NotesList.addItem(f"{note.Column}: {note.Fxl} {note.Pos} {note.Pow}")
-                    #self.NotesList.insertItem(0, ")")
-
-                #self.NotesList.addItem("(")
-                #self.NotesList.insertItem(0, ")")
+                    cur = self.NotesList.addItem("")
+                    self.SetView(self.NotesList, i, note)
 
             self.NotesList.setCurrentRow(curind)
 
@@ -338,6 +400,52 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
             nxtind = index[1] if isinstance(index, list) else None
             self.Position(clss.next(), True, nxtind)
 
+    def SetView(self, vallist, index, Obj):
+        item = vallist.item(index)
+        item.setText(Obj.View())
+
+    def updateObject(self, clss, attr, wdg):
+        if isinstance(wdg, QtWidgets.QLineEdit):
+            value = wdg.text()
+        elif isinstance(wdg, QtWidgets.QSpinBox):
+            value = wdg.value()
+        else: 
+            value = "" # ?
+
+        obj = self.Objs[clss]
+
+        if obj == None:
+            obj = clss()
+            par = self.Objs[clss.prev()]
+            par.Items.append(obj)
+            self.Position(clss, True, len(par.Items) - 1)
+
+        setattr(obj, attr, value)
+
+        vallist = self.Maps[clss].List
+        if vallist != None:
+            par = self.Objs[clss.prev()]
+            self.SetView(vallist, int(par.Index), obj)
+
+    def updateObject__obs(self, map, a, w):
+        items = self.Score
+        for curmap in self.Maps.values():
+            index = curmap.Mapper.currentIndex()
+            obj = items[index]
+
+            if curmap.Mapper != map.Mapper:
+                items = obj.Items
+            else:
+                if isinstance(w, QtWidgets.QLineEdit):
+                    value = w.text()
+                elif isinstance(w, QtWidgets.QSpinBox):
+                    value = w.value()
+                else: 
+                    value = "" # ?
+
+                setattr(obj, a, value)
+
+                break
 
     def DrawStavesTable(self):
         curscore = self.Score[0]
@@ -382,7 +490,6 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
         self.PosStavesTable()
 
-
     def PosStavesTable(self):
         curscore = self.Score[0]
         curpart  = curscore.Items[int(curscore.Index)]
@@ -393,7 +500,6 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
             curcol = int(curnote.Column)
 
             self.StavesTable.setCurrentCell(int(curpart.Index), curcol)
-
 
 
     def PartsSelectionChanged(self):
@@ -426,29 +532,8 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         
         self.Position(Stave, False, [row, ind])
 
-
-    def SomeDrafts_________________(self):
-        currow = -1
-        curcol = -1
-        indexes = self.StavesTable.selectedIndexes()
-        if len(indexes) > 0:
-            currow = indexes[0].row()
-            curcol = indexes[0].column()
-
-        if False:
-            item = QtWidgets.QTableWidgetItem(stave.Name)
-            self.StavesTable.setVerticalHeaderItem(pos, item)
-
-            #item = self.StavesTable.verticalHeaderItem(curstrcount)
-            #item.setText(stave.Name)
-            #self.StavesTable.setCurrentCell(currow, curind)
-
-            #item = QtWidgets.QTableWidgetItem("O")
-            #item.setTextAlignment(QtCore.Qt.AlignVCenter)
-            #item.setBackground(QtGui.QColor(255, 0, 0))  # Красный фон
-            #item.setTextAlignment(QtCore.Qt.AlignVCenter)
-            #item.setFlags(QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEditable)  # Разрешаем редактирование
-            #self.StavesTable.setItem(pos, 0, item)
+        if ind == -1:
+            self.Note_Column.setValue(col)
 
 
     def LoadScorePreset(self):
@@ -547,27 +632,6 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
             break
 
 
-    def updateModel(self, m, a, w):
-        items = self.Score
-        for curmap in self.Maps.values():
-            index = curmap.Mapper.currentIndex()
-            obj = items[index]
-
-            if curmap.Mapper != m:
-                items = obj.Items
-            else:
-                if isinstance(w, QtWidgets.QLineEdit):
-                    value = w.text()
-                elif isinstance(w, QtWidgets.QSpinBox):
-                    value = w.value()
-                else: 
-                    value = "" # ?
-
-                setattr(obj, a, value)
-
-                break
-
-
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
             self.close()
@@ -575,30 +639,6 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
     def closeEvent(self, event):
         self.SaveScore()
         event.accept()
-
-
-def find_column(Matrix, name):
-    # Ищем индекс колонки по имени
-    for column in range(Matrix.columnCount()):
-        header_item = Matrix.horizontalHeaderItem(column)
-        if header_item.text() == name:
-            return column
-    return -1  # Возвращаем -1, если колонка с таким именем не найдена
-
-def prettify(elem):
-    """Возвращает красиво отформатированный XML-элемент"""
-    rough_string = ET.tostring(elem, "utf-8")
-    reparsed = minidom.parseString(rough_string)
-    return reparsed.toprettyxml(indent="\t")
-
-def print_widget_hierarchy(widget, indent=0):
-    # не печатает лейауты ((
-    print("  " * indent + "-" + widget.objectName() + " (" + widget.metaObject().className() + ")")
-
-    for child_widget in widget.findChildren(QtWidgets.QWidget):
-        if child_widget.parent() == widget:  # Check if the child's parent is the widget itself
-            print_widget_hierarchy(child_widget, indent + 1)
-
 
 app = QtWidgets.QApplication([])
 window = Window()
