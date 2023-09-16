@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 import linecache
 import inspect
 
+from jinja2 import Template
 
 def PrintCallStack():
 
@@ -137,13 +138,19 @@ class Part:
         return Stave
 
 class Stave:
-    def __init__(self, Build="", Name="", Condition=""):
+    def __init__(self, Name=""):
         self.Items = []
         self.Index = -1
 
         self.Name  = Name
-        self.Build = Build
-        self.Condition = Condition
+        self.Build = ""
+        self.Condition = ""
+        self.Type = "Module"
+        self.ZeroLength = False
+        self.Sequence = ""
+        self.Parameter = ""
+        self.Sample = ""
+        self.Expression = ""
 
     def View(self):
         return self.Name
@@ -199,8 +206,17 @@ class Map:
                 if isinstance(widget, QtWidgets.QWidget):
                     self.Mapper.addMapping(widget, attr_index)
 
-                    handler = lambda c=self.Class, a=attr_name, w=widget: wnd.updateObject(c, a, w)
-                    widget.editingFinished.connect(handler)
+#                    handler = lambda reserved=None, c=self.Class, a=attr_name, w=widget: wnd.updateObject(reserved, c, a, w)
+                    handler = wnd.updateObjectHandler(clss, attr_name, widget)
+
+                    if isinstance(widget, QtWidgets.QTabWidget):
+                        event = widget.currentChanged
+                    elif isinstance(widget, QtWidgets.QCheckBox):
+                        event = widget.stateChanged
+                    else:
+                        event = widget.editingFinished
+
+                    event.connect(handler)
 
     def FillModel(self, items):
         self.Mapper.model().clear()
@@ -217,18 +233,12 @@ class Map:
 
         self.Mapper.setCurrentIndex(index)
 
-        if index == -1: # empty cell
-            for attr_name in self.Dict:
-                cl_attr_name = self.Class.__name__ + "_" + attr_name
-                wgt = getattr(wnd, cl_attr_name)
-                if isinstance(wgt, QtWidgets.QSpinBox):
-                    wgt.setValue(0)
-                elif isinstance(wgt, QtWidgets.QLineEdit):
-                    wgt.setText("")
-
 
 class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
+    def updateObjectHandler(self, clss, attr_name, widget):
+        return lambda reserved=None, c=clss, a=attr_name, w=widget: self.updateObject(reserved, c, a, w)
+    
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -240,6 +250,8 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
         self.bScoreLoad.clicked.connect(self.LoadScore)
         self.bScoreSave.clicked.connect(self.SaveScore)
+
+        self.bRun.clicked.connect(self.Run)
 
         self.PartsList .itemSelectionChanged.connect(self.PartsSelectionChanged )
         self.StavesList.itemSelectionChanged.connect(self.StavesSelectionChanged)
@@ -299,8 +311,8 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
             button.setChecked  (True)
 
             handler = lambda state, n = name: getattr(self, n).setVisible(state)
-
             button.clicked.connect(handler)
+
             button.setMaximumWidth(200)
 
             self.ButtonsLayout.addWidget(button)
@@ -389,12 +401,37 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
                 self.NotesList.clear()
 
                 for i, note in zip(range(0, len(items)), items):
-                    cur = self.NotesList.addItem("")
+                    self.NotesList.addItem("")
                     self.SetView(self.NotesList, i, note)
 
             self.NotesList.setCurrentRow(curind)
 
             self.NotesList.itemSelectionChanged.connect(self.NotesSelectionChanged)
+
+
+        for attr_name in curmap.Dict:
+            cl_attr_name = clss.__name__ + "_" + attr_name
+            wgt = getattr(self, cl_attr_name)
+            if index != -1:
+                if isinstance(wgt, QtWidgets.QTabWidget):
+
+                    wgt.currentChanged.disconnect()
+
+                    wgt.setCurrentWidget(
+                        wgt.findChild(QtWidgets.QWidget, wgt.objectName() + "_" + getattr(self.Objs[clss], attr_name))
+                    )
+
+                    wgt.currentChanged.connect(
+                        self.updateObjectHandler(clss, attr_name, wgt)
+                    )
+
+
+            else: # empty cell
+                if isinstance(wgt, QtWidgets.QSpinBox):
+                    wgt.setValue(0)
+                elif isinstance(wgt, QtWidgets.QLineEdit):
+                    wgt.setText("")
+
 
         if clss != Note:
             nxtind = index[1] if isinstance(index, list) else None
@@ -404,11 +441,16 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         item = vallist.item(index)
         item.setText(Obj.View())
 
-    def updateObject(self, clss, attr, wdg):
+    def updateObject(self, reserved, clss, attr, wdg):
         if isinstance(wdg, QtWidgets.QLineEdit):
             value = wdg.text()
         elif isinstance(wdg, QtWidgets.QSpinBox):
             value = wdg.value()
+        elif isinstance(wdg, QtWidgets.QTabWidget):
+            value = wdg.currentWidget().objectName()
+            value = value.replace(wdg.objectName() + "_", "")
+        elif isinstance(wdg, QtWidgets.QCheckBox):
+            value = wdg.isChecked()
         else: 
             value = "" # ?
 
@@ -536,6 +578,18 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
             self.Note_Column.setValue(col)
 
 
+    def Run(self):
+        with open('template.j2', 'r') as file: template_str = file.read()
+
+        template_str = "".join([line.strip() for line in template_str.splitlines()])
+
+        template = Template(template_str)
+
+        output = template.render(scores=self.Score)
+
+        with open('score.p', 'w') as file: file.write(output)
+
+
     def LoadScorePreset(self):
         self.Score = []
 
@@ -598,6 +652,14 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
                     for name, value in xnote.attrib.items():
                         setattr(note, name, value)
 
+        self.setGeometry(
+            int(xscore.attrib['window_left'  ]),
+            int(xscore.attrib['window_top'   ]),
+            int(xscore.attrib['window_width' ]),
+            int(xscore.attrib['window_height']),
+        )
+
+
     def SaveScore(self):
         for score in self.Score:
             xscore = ET.Element("Score") # Создание корневого элемента XML
@@ -625,6 +687,11 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
             
             #xml_tree = ET.ElementTree(xscore) # Создание XML-документа
             #xml_tree.write("ScoreSaved.xml") # Сохранение XML-документа в файл
+
+            xscore.set("window_left"  , str(self.geometry().x()))
+            xscore.set("window_top"   , str(self.geometry().y()))
+            xscore.set("window_width" , str(self.geometry().width ()))
+            xscore.set("window_height", str(self.geometry().height()))
 
             # Сохранение XML с отступами и переносами строк
             with open("Score.xml", "w") as xml_file:

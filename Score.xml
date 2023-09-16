@@ -1,12 +1,12 @@
 <?xml version="1.0" ?>
-<Score Name="amen  bro" Duration="2500" Index="1">
+<Score Name="amen  bro" Duration="2500" Index="1" window_left="670" window_top="400" window_width="2416" window_height="1318">
 	<Part Name="Basoon" Numerator="5" Denominator="8" Index="1">
-		<Stave Name="Voice" Build="X1" Condition="zs!0" Index="1">
+		<Stave Name="Voice" Build="X1" Condition="zs!0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="1">
 			<Note Column="1" Fxl="4" Pos="0" Pow="S"/>
 			<Note Column="3" Fxl="1" Pos="0" Pow="x"/>
 			<Note Column="2" Fxl="1" Pos="0" Pow="S"/>
 		</Stave>
-		<Stave Name="Nums" Build="Zaq" Condition="z#0" Index="3">
+		<Stave Name="Nums" Build="Zaq" Condition="z#0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="3">
 			<Note Column="2" Fxl="Z" Pos="1" Pow="3"/>
 			<Note Column="1" Fxl="1" Pos="0" Pow="S"/>
 			<Note Column="0" Fxl="1" Pos="0" Pow="E"/>
@@ -14,12 +14,12 @@
 		</Stave>
 	</Part>
 	<Part Name="Drums" Numerator="7" Denominator="8" Index="0">
-		<Stave Name="s0c2" Build="X" Condition="pos!0" Index="0">
+		<Stave Name="s0c2" Build="X" Condition="pos!0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="0">
 			<Note Column="1" Fxl="1" Pos="0" Pow="S"/>
 			<Note Column="2" Fxl="5" Pos="7" Pow="9"/>
 			<Note Column="0" Fxl="1" Pos="d" Pow="u"/>
 		</Stave>
-		<Stave Name="Nmm" Build="Y" Condition="pos#0" Index="0">
+		<Stave Name="Nmm" Build="Y" Condition="pos#0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="0">
 			<Note Column="1" Fxl="4" Pos="A" Pow="D"/>
 			<Note Column="2" Fxl="1" Pos="0" Pow="S"/>
 			<Note Column="3" Fxl="1" Pos="0" Pow="x"/>

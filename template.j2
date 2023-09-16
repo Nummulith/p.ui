@@ -1,0 +1,14 @@
+{% set slots = [] %}
+{% for score in scores %}
+    {% for part in score.Items %}
+        {% for stave in part.Items %}
+            {{ stave.Name }}: b{{ stave.Build }} ?{{ stave.Condition }} {{ "\n" }}
+            {% if stave.Name not in slots %}
+                {% set _ = slots.append(stave.Name) %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+{% endfor %}
+{% for name in slots %}
+    {{ name }} {{ "\n" }}
+{% endfor %}
