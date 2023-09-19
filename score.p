@@ -1,7 +1,7 @@
-Voice: bX1 ?zs!0 
-Nums: bZaq ?z#0 
-s0c2: bX ?pos!0 
-Nums: bY ?pos#0 
-Voice 
-Nums 
-s0c2 
+$( [Intro]
+(l, len, ton, fxl, pos, pow){(
+mtn = ton + 12. * 0;
+tkt = len * 5 : 8;
+bld = "" + fxl + " " + pos + " " + pow;
+Basoon
+Drums

@@ -113,6 +113,10 @@ class Score:
         self.Name = Name
         self.Duration = 2100
 
+    def __copy__(self):
+        print("Объект копируется без моего ведома")
+        return Score(self.data)
+    
     @staticmethod
     def next():
         return Part
@@ -125,6 +129,13 @@ class Part:
         self.Name = Name
         self.Numerator = Numerator
         self.Denominator = Denominator
+        self.Role = "Function"
+        self.Pitch = 0
+        self.Transpose = 0
+
+        self.BuildFxl = True
+        self.BuildPos = True
+        self.BuildPow = False
 
     def View(self):
         return self.Name
@@ -439,6 +450,9 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
     def SetView(self, vallist, index, Obj):
         item = vallist.item(index)
+
+        if item == None: return
+
         item.setText(Obj.View())
 
     def updateObject(self, reserved, clss, attr, wdg):
@@ -585,7 +599,8 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
         template = Template(template_str)
 
-        output = template.render(scores=self.Score)
+#        output = template.render(score=self.Score[0])
+        output = template.render(score=self.Score[0], part=self.Objs[Part])
 
         with open('score.p', 'w') as file: file.write(output)
 
@@ -658,7 +673,6 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
             int(xscore.attrib['window_width' ]),
             int(xscore.attrib['window_height']),
         )
-
 
     def SaveScore(self):
         for score in self.Score:

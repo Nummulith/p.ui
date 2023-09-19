@@ -65,11 +65,6 @@ class Ui_pApp(object):
 
         self.verticalLayout_4.addWidget(self.label_7)
 
-        self.label_6 = QLabel(self.frame0)
-        self.label_6.setObjectName(u"label_6")
-
-        self.verticalLayout_4.addWidget(self.label_6)
-
         self.Score_Name = QLineEdit(self.frame0)
         self.Score_Name.setObjectName(u"Score_Name")
 
@@ -148,15 +143,57 @@ class Ui_pApp(object):
 
         self.verticalLayout_3.addWidget(self.label_2)
 
-        self.label_8 = QLabel(self.frame1)
-        self.label_8.setObjectName(u"label_8")
-
-        self.verticalLayout_3.addWidget(self.label_8)
-
         self.Part_Name = QLineEdit(self.frame1)
         self.Part_Name.setObjectName(u"Part_Name")
 
         self.verticalLayout_3.addWidget(self.Part_Name)
+
+        self.Part_Role = QTabWidget(self.frame1)
+        self.Part_Role.setObjectName(u"Part_Role")
+        self.Part_Role.setMaximumSize(QSize(1000, 150))
+        self.Part_Role_Main = QWidget()
+        self.Part_Role_Main.setObjectName(u"Part_Role_Main")
+        self.verticalLayout_11 = QVBoxLayout(self.Part_Role_Main)
+        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
+        self.label_24 = QLabel(self.Part_Role_Main)
+        self.label_24.setObjectName(u"label_24")
+
+        self.verticalLayout_11.addWidget(self.label_24)
+
+        self.Part_Pitch = QSpinBox(self.Part_Role_Main)
+        self.Part_Pitch.setObjectName(u"Part_Pitch")
+
+        self.verticalLayout_11.addWidget(self.Part_Pitch)
+
+        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_11.addItem(self.verticalSpacer_6)
+
+        self.Part_Role.addTab(self.Part_Role_Main, "")
+        self.Part_Role_Function = QWidget()
+        self.Part_Role_Function.setObjectName(u"Part_Role_Function")
+        self.verticalLayout_12 = QVBoxLayout(self.Part_Role_Function)
+        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
+        self.label_25 = QLabel(self.Part_Role_Function)
+        self.label_25.setObjectName(u"label_25")
+
+        self.verticalLayout_12.addWidget(self.label_25)
+
+        self.Part_Transpose = QSpinBox(self.Part_Role_Function)
+        self.Part_Transpose.setObjectName(u"Part_Transpose")
+
+        self.verticalLayout_12.addWidget(self.Part_Transpose)
+
+        self.verticalSpacer_7 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_12.addItem(self.verticalSpacer_7)
+
+        self.Part_Role.addTab(self.Part_Role_Function, "")
+        self.Part_Role_None = QWidget()
+        self.Part_Role_None.setObjectName(u"Part_Role_None")
+        self.Part_Role.addTab(self.Part_Role_None, "")
+
+        self.verticalLayout_3.addWidget(self.Part_Role)
 
         self.label_3 = QLabel(self.frame1)
         self.label_3.setObjectName(u"label_3")
@@ -177,6 +214,31 @@ class Ui_pApp(object):
         self.Part_Denominator.setObjectName(u"Part_Denominator")
 
         self.verticalLayout_3.addWidget(self.Part_Denominator)
+
+        self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.label_26 = QLabel(self.frame1)
+        self.label_26.setObjectName(u"label_26")
+
+        self.horizontalLayout_6.addWidget(self.label_26)
+
+        self.Part_BuildFxl = QCheckBox(self.frame1)
+        self.Part_BuildFxl.setObjectName(u"Part_BuildFxl")
+
+        self.horizontalLayout_6.addWidget(self.Part_BuildFxl)
+
+        self.Part_BuildPos = QCheckBox(self.frame1)
+        self.Part_BuildPos.setObjectName(u"Part_BuildPos")
+
+        self.horizontalLayout_6.addWidget(self.Part_BuildPos)
+
+        self.Part_BuildPow = QCheckBox(self.frame1)
+        self.Part_BuildPow.setObjectName(u"Part_BuildPow")
+
+        self.horizontalLayout_6.addWidget(self.Part_BuildPow)
+
+
+        self.verticalLayout_3.addLayout(self.horizontalLayout_6)
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
@@ -219,11 +281,6 @@ class Ui_pApp(object):
         self.label_4.setObjectName(u"label_4")
 
         self.verticalLayout_6.addWidget(self.label_4)
-
-        self.label_15 = QLabel(self.frame2)
-        self.label_15.setObjectName(u"label_15")
-
-        self.verticalLayout_6.addWidget(self.label_15)
 
         self.Stave_Name = QLineEdit(self.frame2)
         self.Stave_Name.setObjectName(u"Stave_Name")
@@ -443,11 +500,6 @@ class Ui_pApp(object):
 
         self.verticalLayout_2.addWidget(self.label_5)
 
-        self.label_13 = QLabel(self.frame3)
-        self.label_13.setObjectName(u"label_13")
-
-        self.verticalLayout_2.addWidget(self.label_13)
-
         self.Note_Column = QSpinBox(self.frame3)
         self.Note_Column.setObjectName(u"Note_Column")
 
@@ -495,7 +547,8 @@ class Ui_pApp(object):
 
         self.retranslateUi(pApp)
 
-        self.Stave_Type.setCurrentIndex(2)
+        self.Part_Role.setCurrentIndex(1)
+        self.Stave_Type.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(pApp)
@@ -504,23 +557,29 @@ class Ui_pApp(object):
     def retranslateUi(self, pApp):
         pApp.setWindowTitle(QCoreApplication.translate("pApp", u"p", None))
         self.label_7.setText(QCoreApplication.translate("pApp", u"Score", None))
-        self.label_6.setText(QCoreApplication.translate("pApp", u"Name", None))
         self.label_10.setText(QCoreApplication.translate("pApp", u"Duration", None))
-        self.label.setText(QCoreApplication.translate("pApp", u"Parts", None))
+        self.label.setText(QCoreApplication.translate("pApp", u"Partitures", None))
         self.PartsListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
         self.PartsListDel.setText(QCoreApplication.translate("pApp", u"-", None))
         self.bScoreLoad.setText(QCoreApplication.translate("pApp", u"Load", None))
         self.bScoreSave.setText(QCoreApplication.translate("pApp", u"Save", None))
         self.bRun.setText(QCoreApplication.translate("pApp", u"Run", None))
         self.label_2.setText(QCoreApplication.translate("pApp", u"Partiture", None))
-        self.label_8.setText(QCoreApplication.translate("pApp", u"Name", None))
+        self.label_24.setText(QCoreApplication.translate("pApp", u"Pitch", None))
+        self.Part_Role.setTabText(self.Part_Role.indexOf(self.Part_Role_Main), QCoreApplication.translate("pApp", u"Main", None))
+        self.label_25.setText(QCoreApplication.translate("pApp", u"Transpose", None))
+        self.Part_Role.setTabText(self.Part_Role.indexOf(self.Part_Role_Function), QCoreApplication.translate("pApp", u"Function", None))
+        self.Part_Role.setTabText(self.Part_Role.indexOf(self.Part_Role_None), QCoreApplication.translate("pApp", u"None", None))
         self.label_3.setText(QCoreApplication.translate("pApp", u"Numerator", None))
         self.label_9.setText(QCoreApplication.translate("pApp", u"Denominator", None))
+        self.label_26.setText(QCoreApplication.translate("pApp", u"Build fpp", None))
+        self.Part_BuildFxl.setText("")
+        self.Part_BuildPos.setText("")
+        self.Part_BuildPow.setText("")
         self.label_11.setText(QCoreApplication.translate("pApp", u"Staves", None))
         self.StavesListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
         self.StavesListDel.setText(QCoreApplication.translate("pApp", u"-", None))
         self.label_4.setText(QCoreApplication.translate("pApp", u"Stave", None))
-        self.label_15.setText(QCoreApplication.translate("pApp", u"Name", None))
         self.label_16.setText(QCoreApplication.translate("pApp", u"Build", None))
         self.label_17.setText(QCoreApplication.translate("pApp", u"Condition", None))
         self.label_19.setText(QCoreApplication.translate("pApp", u"File", None))
@@ -553,7 +612,6 @@ class Ui_pApp(object):
         self.StavesTable.setSortingEnabled(__sortingEnabled)
 
         self.label_5.setText(QCoreApplication.translate("pApp", u"Note", None))
-        self.label_13.setText(QCoreApplication.translate("pApp", u"Column", None))
         self.label_14.setText(QCoreApplication.translate("pApp", u"Fxl, Pos, Pow", None))
     # retranslateUi
 

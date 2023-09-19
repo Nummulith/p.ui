@@ -61,13 +61,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QLineEdit" name="Score_Name"/>
           </item>
           <item>
@@ -89,7 +82,7 @@
             <item>
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>Parts</string>
+               <string>Partitures</string>
               </property>
              </widget>
             </item>
@@ -172,14 +165,85 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_8">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
+           <widget class="QLineEdit" name="Part_Name"/>
           </item>
           <item>
-           <widget class="QLineEdit" name="Part_Name"/>
+           <widget class="QTabWidget" name="Part_Role">
+            <property name="maximumSize">
+             <size>
+              <width>1000</width>
+              <height>150</height>
+             </size>
+            </property>
+            <property name="currentIndex">
+             <number>1</number>
+            </property>
+            <widget class="QWidget" name="Part_Role_Main">
+             <attribute name="title">
+              <string>Main</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_11">
+              <item>
+               <widget class="QLabel" name="label_24">
+                <property name="text">
+                 <string>Pitch</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="Part_Pitch"/>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_6">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="Part_Role_Function">
+             <attribute name="title">
+              <string>Function</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_12">
+              <item>
+               <widget class="QLabel" name="label_25">
+                <property name="text">
+                 <string>Transpose</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="Part_Transpose"/>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_7">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="Part_Role_None">
+             <attribute name="title">
+              <string>None</string>
+             </attribute>
+            </widget>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_3">
@@ -200,6 +264,38 @@
           </item>
           <item>
            <widget class="QSpinBox" name="Part_Denominator"/>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QLabel" name="label_26">
+              <property name="text">
+               <string>Build fpp</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Part_BuildFxl">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Part_BuildPos">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Part_BuildPow">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -264,13 +360,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_15">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QLineEdit" name="Stave_Name"/>
           </item>
           <item>
@@ -314,7 +403,7 @@
              </size>
             </property>
             <property name="currentIndex">
-             <number>2</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="Stave_Type_Module">
              <attribute name="title">
@@ -581,13 +670,6 @@ QTableWidget::item {
            <widget class="QLabel" name="label_5">
             <property name="text">
              <string>Note</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_13">
-            <property name="text">
-             <string>Column</string>
             </property>
            </widget>
           </item>

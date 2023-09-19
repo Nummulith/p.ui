@@ -1,14 +1,44 @@
-{% set slots = [] %}
-{% for score in scores %}
-    {% for part in score.Items %}
-        {% for stave in part.Items %}
-            {{ stave.Name }}: b{{ stave.Build }} ?{{ stave.Condition }} {{ "\n" }}
-            {% if stave.Name not in slots %}
-                {% set _ = slots.append(stave.Name) %}
-            {% endif %}
-        {% endfor %}
-    {% endfor %}
-{% endfor %}
-{% for name in slots %}
-    {{ name }} {{ "\n" }}
+{# Intro #}
+{{ "$( [Intro]\n" }}
+
+{% if part.Role == "Main" %}
+    {{ "l = Eval(\n" }}
+    {{ "\t" + "FileText(FileDir(GetAppName) + \"\\..\\plWave\\plWave.p\"), \n" }}
+    {{ "\t" + "FileDir(GetAppName) + \"\\shm\\shm.pi\", \"plWave\" \n" }}
+    {{ "); l = l; \n" }}
+    {{ "\n" }}
+    {{ "len _ " + score.Duration|string + ";\n" }}
+    {{ "ton _ 0.0;\n" }}
+    {{ "fxl _ \"???X\";\n" }}
+
+{% elif part.Role == "Function" %}
+    {{ "(l, len, ton, fxl, pos, pow){(\n" }}
+    {{ "mtn = ton + 12. * " + part.Pitch|string + ";\n" }}
+
+{% elif part.Role == "None" %}
+{% endif %}
+
+
+{{ "tkt = len * " + part.Numerator|string + " : " + part.Denominator|string + ";\n" }}
+
+
+{% set bld = "" %}
+{% if part.BuildFxl %}
+    {% if bld != "" %}{% set bld = bld + " + \" \"" %}{% endif %}
+    {% set bld = bld + " + fxl" %}
+{% endif %}
+{% if part.BuildPos %}
+    {% if bld != "" %}{% set bld = bld + " + \" \"" %}{% endif %}
+    {% set bld = bld + " + pos" %}
+{% endif %}
+{% if part.BuildPow %}
+    {% if bld != "" %}{% set bld = bld + " + \" \"" %}{% endif %}
+    {% set bld = bld + " + pow" %}
+{% endif %}
+{{ "bld = \"\"" + bld + ";\n" }}
+
+{# unique names #}
+{% set names = score.Items|map(attribute='Name')|unique|list %}
+{% for name in names %}
+    {{ name + "\n" }}
 {% endfor %}
