@@ -61,13 +61,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QLineEdit" name="Score_Name"/>
           </item>
           <item>
@@ -85,11 +78,41 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>Parts</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Partitures</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="PartsListAdd">
+              <property name="maximumSize">
+               <size>
+                <width>26</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="PartsListDel">
+              <property name="maximumSize">
+               <size>
+                <width>26</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>-</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="QListWidget" name="PartsList"/>
@@ -111,6 +134,13 @@
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QPushButton" name="bRun">
+            <property name="text">
+             <string>Run</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -135,14 +165,85 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_8">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
+           <widget class="QLineEdit" name="Part_Name"/>
           </item>
           <item>
-           <widget class="QLineEdit" name="Part_Name"/>
+           <widget class="QTabWidget" name="Part_Role">
+            <property name="maximumSize">
+             <size>
+              <width>1000</width>
+              <height>150</height>
+             </size>
+            </property>
+            <property name="currentIndex">
+             <number>1</number>
+            </property>
+            <widget class="QWidget" name="Part_Role_Main">
+             <attribute name="title">
+              <string>Main</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_11">
+              <item>
+               <widget class="QLabel" name="label_24">
+                <property name="text">
+                 <string>Pitch</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="Part_Pitch"/>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_6">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="Part_Role_Function">
+             <attribute name="title">
+              <string>Function</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_12">
+              <item>
+               <widget class="QLabel" name="label_25">
+                <property name="text">
+                 <string>Transpose</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="Part_Transpose"/>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_7">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="Part_Role_None">
+             <attribute name="title">
+              <string>None</string>
+             </attribute>
+            </widget>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_3">
@@ -165,11 +266,73 @@
            <widget class="QSpinBox" name="Part_Denominator"/>
           </item>
           <item>
-           <widget class="QLabel" name="label_11">
-            <property name="text">
-             <string>Staves</string>
-            </property>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QLabel" name="label_26">
+              <property name="text">
+               <string>Build fpp</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Part_BuildFxl">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Part_BuildPos">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="Part_BuildPow">
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLabel" name="label_11">
+              <property name="text">
+               <string>Staves</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="StavesListAdd">
+              <property name="maximumSize">
+               <size>
+                <width>26</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="StavesListDel">
+              <property name="maximumSize">
+               <size>
+                <width>26</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>-</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="QListWidget" name="StavesList"/>
@@ -197,13 +360,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_15">
-            <property name="text">
-             <string>Name</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QLineEdit" name="Stave_Name"/>
           </item>
           <item>
@@ -227,11 +383,203 @@
            <widget class="QLineEdit" name="Stave_Condition"/>
           </item>
           <item>
-           <widget class="QLabel" name="label_12">
-            <property name="text">
-             <string>Notes</string>
+           <widget class="QTabWidget" name="Stave_Type">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
+            <property name="maximumSize">
+             <size>
+              <width>6000</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="baseSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <widget class="QWidget" name="Stave_Type_Module">
+             <attribute name="title">
+              <string>Module</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_7">
+              <item>
+               <widget class="QLabel" name="label_19">
+                <property name="text">
+                 <string>File</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="Stave_Module"/>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="Stave_ZeroLength">
+                <property name="text">
+                 <string>Zero Length</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="Stave_Type_Sequence">
+             <attribute name="title">
+              <string>Sequence</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_8">
+              <item>
+               <widget class="QLabel" name="label_20">
+                <property name="text">
+                 <string>Sequence</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="Stave_Sequence"/>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_21">
+                <property name="text">
+                 <string>Parameter</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="Stave_Parameter"/>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="Stave_Type_Sample">
+             <attribute name="title">
+              <string>Sample</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_9">
+              <item>
+               <widget class="QLabel" name="label_22">
+                <property name="text">
+                 <string>Sample</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="Stave_Sample"/>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_4">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>40</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="Stave_Type_Expression">
+             <attribute name="title">
+              <string>Expression</string>
+             </attribute>
+             <layout class="QVBoxLayout" name="verticalLayout_10">
+              <item>
+               <widget class="QLabel" name="label_23">
+                <property name="text">
+                 <string>Expression</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLineEdit" name="Stave_Expression"/>
+              </item>
+              <item>
+               <spacer name="verticalSpacer_5">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>101</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
            </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QLabel" name="label_12">
+              <property name="text">
+               <string>Notes</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="NotesListAdd">
+              <property name="maximumSize">
+               <size>
+                <width>26</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="NotesListDel">
+              <property name="maximumSize">
+               <size>
+                <width>26</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>-</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
           <item>
            <widget class="QListWidget" name="NotesList"/>
@@ -326,13 +674,6 @@ QTableWidget::item {
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_13">
-            <property name="text">
-             <string>Column</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QSpinBox" name="Note_Column"/>
           </item>
           <item>
@@ -375,13 +716,6 @@ QTableWidget::item {
              </widget>
             </item>
            </layout>
-          </item>
-          <item>
-           <widget class="QPushButton" name="printdivider">
-            <property name="text">
-             <string>print divider</string>
-            </property>
-           </widget>
           </item>
           <item>
            <spacer name="verticalSpacer">

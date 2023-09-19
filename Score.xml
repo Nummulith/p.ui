@@ -1,27 +1,29 @@
 <?xml version="1.0" ?>
-<Score Name="" Duration="2500" Index="1">
-	<Part Name="Bass" Numerator="5" Denominator="8" Index="0">
-		<Stave Name="s0c1---" Build="X1" Condition="zs!0" Index="0">
+<Score Name="amen  bro" Duration="2501" Index="0" window_left="651" window_top="558" window_width="1872" window_height="1273">
+	<Part Name="Basoon" Numerator="5" Denominator="8" Role="Function" Pitch="0" Transpose="0" BuildFxl="True" BuildPos="True" BuildPow="False" Index="1">
+		<Stave Name="Voice" Build="X1" Condition="zs!0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="2">
 			<Note Column="1" Fxl="4" Pos="0" Pow="S"/>
 			<Note Column="3" Fxl="1" Pos="0" Pow="x"/>
-			<Note Column="4" Fxl="2" Pos="0" Pow="S"/>
-		</Stave>
-		<Stave Name="Nmmm1" Build="Zaq" Condition="z#0" Index="-1">
-			<Note Column="1" Fxl="2" Pos="A" Pow="D"/>
 			<Note Column="2" Fxl="1" Pos="0" Pow="S"/>
-			<Note Column="3" Fxl="1" Pos="0" Pow="z"/>
+		</Stave>
+		<Stave Name="Nums" Build="Zaq" Condition="z#0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="0">
+			<Note Column="2" Fxl="Z" Pos="1" Pow="3"/>
+			<Note Column="1" Fxl="1" Pos="0" Pow="S"/>
+			<Note Column="0" Fxl="1" Pos="0" Pow="E"/>
+			<Note Column="3" Fxl="A" Pos="2" Pow="3"/>
 		</Stave>
 	</Part>
-	<Part Name="Drums" Numerator="7" Denominator="8" Index="1">
-		<Stave Name="s0c2" Build="X" Condition="pos!0" Index="0">
+	<Part Name="Drums" Numerator="8" Denominator="9" Role="Main" Pitch="0" Transpose="0" BuildFxl="True" BuildPos="True" BuildPow="False" Index="1">
+		<Stave Name="s0c2" Build="X" Condition="pos!0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="2">
 			<Note Column="1" Fxl="1" Pos="0" Pow="S"/>
 			<Note Column="2" Fxl="5" Pos="7" Pow="9"/>
 			<Note Column="0" Fxl="1" Pos="d" Pow="u"/>
 		</Stave>
-		<Stave Name="Nmmm" Build="Y" Condition="pos#0" Index="1">
-			<Note Column="1" Fxl="2" Pos="A" Pow="D"/>
+		<Stave Name="Nmm" Build="Y" Condition="pos#0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="3">
+			<Note Column="1" Fxl="4" Pos="A" Pow="D"/>
 			<Note Column="2" Fxl="1" Pos="0" Pow="S"/>
-			<Note Column="3" Fxl="1" Pos="0" Pow="TT"/>
+			<Note Column="3" Fxl="1" Pos="0" Pow="x"/>
+			<Note Column="0" Fxl="1" Pos="2" Pow="3"/>
 		</Stave>
 	</Part>
 </Score>

@@ -15,11 +15,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QHeaderView,
-    QLabel, QLineEdit, QListWidget, QListWidgetItem,
-    QMainWindow, QPushButton, QSizePolicy, QSpacerItem,
-    QSpinBox, QTableWidget, QTableWidgetItem, QVBoxLayout,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QHBoxLayout,
+    QHeaderView, QLabel, QLineEdit, QListWidget,
+    QListWidgetItem, QMainWindow, QPushButton, QSizePolicy,
+    QSpacerItem, QSpinBox, QTabWidget, QTableWidget,
+    QTableWidgetItem, QVBoxLayout, QWidget)
 
 class Ui_pApp(object):
     def setupUi(self, pApp):
@@ -65,11 +65,6 @@ class Ui_pApp(object):
 
         self.verticalLayout_4.addWidget(self.label_7)
 
-        self.label_6 = QLabel(self.frame0)
-        self.label_6.setObjectName(u"label_6")
-
-        self.verticalLayout_4.addWidget(self.label_6)
-
         self.Score_Name = QLineEdit(self.frame0)
         self.Score_Name.setObjectName(u"Score_Name")
 
@@ -86,10 +81,27 @@ class Ui_pApp(object):
 
         self.verticalLayout_4.addWidget(self.Score_Duration)
 
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.label = QLabel(self.frame0)
         self.label.setObjectName(u"label")
 
-        self.verticalLayout_4.addWidget(self.label)
+        self.horizontalLayout.addWidget(self.label)
+
+        self.PartsListAdd = QPushButton(self.frame0)
+        self.PartsListAdd.setObjectName(u"PartsListAdd")
+        self.PartsListAdd.setMaximumSize(QSize(26, 32))
+
+        self.horizontalLayout.addWidget(self.PartsListAdd)
+
+        self.PartsListDel = QPushButton(self.frame0)
+        self.PartsListDel.setObjectName(u"PartsListDel")
+        self.PartsListDel.setMaximumSize(QSize(26, 32))
+
+        self.horizontalLayout.addWidget(self.PartsListDel)
+
+
+        self.verticalLayout_4.addLayout(self.horizontalLayout)
 
         self.PartsList = QListWidget(self.frame0)
         self.PartsList.setObjectName(u"PartsList")
@@ -111,6 +123,11 @@ class Ui_pApp(object):
 
         self.verticalLayout_4.addLayout(self.horizontalLayout_2)
 
+        self.bRun = QPushButton(self.frame0)
+        self.bRun.setObjectName(u"bRun")
+
+        self.verticalLayout_4.addWidget(self.bRun)
+
 
         self.PanelsLayout.addWidget(self.frame0)
 
@@ -126,15 +143,57 @@ class Ui_pApp(object):
 
         self.verticalLayout_3.addWidget(self.label_2)
 
-        self.label_8 = QLabel(self.frame1)
-        self.label_8.setObjectName(u"label_8")
-
-        self.verticalLayout_3.addWidget(self.label_8)
-
         self.Part_Name = QLineEdit(self.frame1)
         self.Part_Name.setObjectName(u"Part_Name")
 
         self.verticalLayout_3.addWidget(self.Part_Name)
+
+        self.Part_Role = QTabWidget(self.frame1)
+        self.Part_Role.setObjectName(u"Part_Role")
+        self.Part_Role.setMaximumSize(QSize(1000, 150))
+        self.Part_Role_Main = QWidget()
+        self.Part_Role_Main.setObjectName(u"Part_Role_Main")
+        self.verticalLayout_11 = QVBoxLayout(self.Part_Role_Main)
+        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
+        self.label_24 = QLabel(self.Part_Role_Main)
+        self.label_24.setObjectName(u"label_24")
+
+        self.verticalLayout_11.addWidget(self.label_24)
+
+        self.Part_Pitch = QSpinBox(self.Part_Role_Main)
+        self.Part_Pitch.setObjectName(u"Part_Pitch")
+
+        self.verticalLayout_11.addWidget(self.Part_Pitch)
+
+        self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_11.addItem(self.verticalSpacer_6)
+
+        self.Part_Role.addTab(self.Part_Role_Main, "")
+        self.Part_Role_Function = QWidget()
+        self.Part_Role_Function.setObjectName(u"Part_Role_Function")
+        self.verticalLayout_12 = QVBoxLayout(self.Part_Role_Function)
+        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
+        self.label_25 = QLabel(self.Part_Role_Function)
+        self.label_25.setObjectName(u"label_25")
+
+        self.verticalLayout_12.addWidget(self.label_25)
+
+        self.Part_Transpose = QSpinBox(self.Part_Role_Function)
+        self.Part_Transpose.setObjectName(u"Part_Transpose")
+
+        self.verticalLayout_12.addWidget(self.Part_Transpose)
+
+        self.verticalSpacer_7 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_12.addItem(self.verticalSpacer_7)
+
+        self.Part_Role.addTab(self.Part_Role_Function, "")
+        self.Part_Role_None = QWidget()
+        self.Part_Role_None.setObjectName(u"Part_Role_None")
+        self.Part_Role.addTab(self.Part_Role_None, "")
+
+        self.verticalLayout_3.addWidget(self.Part_Role)
 
         self.label_3 = QLabel(self.frame1)
         self.label_3.setObjectName(u"label_3")
@@ -156,10 +215,52 @@ class Ui_pApp(object):
 
         self.verticalLayout_3.addWidget(self.Part_Denominator)
 
+        self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.label_26 = QLabel(self.frame1)
+        self.label_26.setObjectName(u"label_26")
+
+        self.horizontalLayout_6.addWidget(self.label_26)
+
+        self.Part_BuildFxl = QCheckBox(self.frame1)
+        self.Part_BuildFxl.setObjectName(u"Part_BuildFxl")
+
+        self.horizontalLayout_6.addWidget(self.Part_BuildFxl)
+
+        self.Part_BuildPos = QCheckBox(self.frame1)
+        self.Part_BuildPos.setObjectName(u"Part_BuildPos")
+
+        self.horizontalLayout_6.addWidget(self.Part_BuildPos)
+
+        self.Part_BuildPow = QCheckBox(self.frame1)
+        self.Part_BuildPow.setObjectName(u"Part_BuildPow")
+
+        self.horizontalLayout_6.addWidget(self.Part_BuildPow)
+
+
+        self.verticalLayout_3.addLayout(self.horizontalLayout_6)
+
+        self.horizontalLayout_4 = QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.label_11 = QLabel(self.frame1)
         self.label_11.setObjectName(u"label_11")
 
-        self.verticalLayout_3.addWidget(self.label_11)
+        self.horizontalLayout_4.addWidget(self.label_11)
+
+        self.StavesListAdd = QPushButton(self.frame1)
+        self.StavesListAdd.setObjectName(u"StavesListAdd")
+        self.StavesListAdd.setMaximumSize(QSize(26, 32))
+
+        self.horizontalLayout_4.addWidget(self.StavesListAdd)
+
+        self.StavesListDel = QPushButton(self.frame1)
+        self.StavesListDel.setObjectName(u"StavesListDel")
+        self.StavesListDel.setMaximumSize(QSize(26, 32))
+
+        self.horizontalLayout_4.addWidget(self.StavesListDel)
+
+
+        self.verticalLayout_3.addLayout(self.horizontalLayout_4)
 
         self.StavesList = QListWidget(self.frame1)
         self.StavesList.setObjectName(u"StavesList")
@@ -180,11 +281,6 @@ class Ui_pApp(object):
         self.label_4.setObjectName(u"label_4")
 
         self.verticalLayout_6.addWidget(self.label_4)
-
-        self.label_15 = QLabel(self.frame2)
-        self.label_15.setObjectName(u"label_15")
-
-        self.verticalLayout_6.addWidget(self.label_15)
 
         self.Stave_Name = QLineEdit(self.frame2)
         self.Stave_Name.setObjectName(u"Stave_Name")
@@ -211,10 +307,130 @@ class Ui_pApp(object):
 
         self.verticalLayout_6.addWidget(self.Stave_Condition)
 
+        self.Stave_Type = QTabWidget(self.frame2)
+        self.Stave_Type.setObjectName(u"Stave_Type")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.Stave_Type.sizePolicy().hasHeightForWidth())
+        self.Stave_Type.setSizePolicy(sizePolicy2)
+        self.Stave_Type.setMaximumSize(QSize(6000, 200))
+        self.Stave_Type.setBaseSize(QSize(0, 0))
+        self.Stave_Type_Module = QWidget()
+        self.Stave_Type_Module.setObjectName(u"Stave_Type_Module")
+        self.verticalLayout_7 = QVBoxLayout(self.Stave_Type_Module)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.label_19 = QLabel(self.Stave_Type_Module)
+        self.label_19.setObjectName(u"label_19")
+
+        self.verticalLayout_7.addWidget(self.label_19)
+
+        self.Stave_Module = QLineEdit(self.Stave_Type_Module)
+        self.Stave_Module.setObjectName(u"Stave_Module")
+
+        self.verticalLayout_7.addWidget(self.Stave_Module)
+
+        self.Stave_ZeroLength = QCheckBox(self.Stave_Type_Module)
+        self.Stave_ZeroLength.setObjectName(u"Stave_ZeroLength")
+
+        self.verticalLayout_7.addWidget(self.Stave_ZeroLength)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_7.addItem(self.verticalSpacer_2)
+
+        self.Stave_Type.addTab(self.Stave_Type_Module, "")
+        self.Stave_Type_Sequence = QWidget()
+        self.Stave_Type_Sequence.setObjectName(u"Stave_Type_Sequence")
+        self.verticalLayout_8 = QVBoxLayout(self.Stave_Type_Sequence)
+        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
+        self.label_20 = QLabel(self.Stave_Type_Sequence)
+        self.label_20.setObjectName(u"label_20")
+
+        self.verticalLayout_8.addWidget(self.label_20)
+
+        self.Stave_Sequence = QLineEdit(self.Stave_Type_Sequence)
+        self.Stave_Sequence.setObjectName(u"Stave_Sequence")
+
+        self.verticalLayout_8.addWidget(self.Stave_Sequence)
+
+        self.label_21 = QLabel(self.Stave_Type_Sequence)
+        self.label_21.setObjectName(u"label_21")
+
+        self.verticalLayout_8.addWidget(self.label_21)
+
+        self.Stave_Parameter = QLineEdit(self.Stave_Type_Sequence)
+        self.Stave_Parameter.setObjectName(u"Stave_Parameter")
+
+        self.verticalLayout_8.addWidget(self.Stave_Parameter)
+
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_8.addItem(self.verticalSpacer_3)
+
+        self.Stave_Type.addTab(self.Stave_Type_Sequence, "")
+        self.Stave_Type_Sample = QWidget()
+        self.Stave_Type_Sample.setObjectName(u"Stave_Type_Sample")
+        self.verticalLayout_9 = QVBoxLayout(self.Stave_Type_Sample)
+        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.label_22 = QLabel(self.Stave_Type_Sample)
+        self.label_22.setObjectName(u"label_22")
+
+        self.verticalLayout_9.addWidget(self.label_22)
+
+        self.Stave_Sample = QLineEdit(self.Stave_Type_Sample)
+        self.Stave_Sample.setObjectName(u"Stave_Sample")
+
+        self.verticalLayout_9.addWidget(self.Stave_Sample)
+
+        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_9.addItem(self.verticalSpacer_4)
+
+        self.Stave_Type.addTab(self.Stave_Type_Sample, "")
+        self.Stave_Type_Expression = QWidget()
+        self.Stave_Type_Expression.setObjectName(u"Stave_Type_Expression")
+        self.verticalLayout_10 = QVBoxLayout(self.Stave_Type_Expression)
+        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
+        self.label_23 = QLabel(self.Stave_Type_Expression)
+        self.label_23.setObjectName(u"label_23")
+
+        self.verticalLayout_10.addWidget(self.label_23)
+
+        self.Stave_Expression = QLineEdit(self.Stave_Type_Expression)
+        self.Stave_Expression.setObjectName(u"Stave_Expression")
+
+        self.verticalLayout_10.addWidget(self.Stave_Expression)
+
+        self.verticalSpacer_5 = QSpacerItem(20, 101, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_10.addItem(self.verticalSpacer_5)
+
+        self.Stave_Type.addTab(self.Stave_Type_Expression, "")
+
+        self.verticalLayout_6.addWidget(self.Stave_Type)
+
+        self.horizontalLayout_5 = QHBoxLayout()
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.label_12 = QLabel(self.frame2)
         self.label_12.setObjectName(u"label_12")
 
-        self.verticalLayout_6.addWidget(self.label_12)
+        self.horizontalLayout_5.addWidget(self.label_12)
+
+        self.NotesListAdd = QPushButton(self.frame2)
+        self.NotesListAdd.setObjectName(u"NotesListAdd")
+        self.NotesListAdd.setMaximumSize(QSize(26, 32))
+
+        self.horizontalLayout_5.addWidget(self.NotesListAdd)
+
+        self.NotesListDel = QPushButton(self.frame2)
+        self.NotesListDel.setObjectName(u"NotesListDel")
+        self.NotesListDel.setMaximumSize(QSize(26, 32))
+
+        self.horizontalLayout_5.addWidget(self.NotesListDel)
+
+
+        self.verticalLayout_6.addLayout(self.horizontalLayout_5)
 
         self.NotesList = QListWidget(self.frame2)
         self.NotesList.setObjectName(u"NotesList")
@@ -284,11 +500,6 @@ class Ui_pApp(object):
 
         self.verticalLayout_2.addWidget(self.label_5)
 
-        self.label_13 = QLabel(self.frame3)
-        self.label_13.setObjectName(u"label_13")
-
-        self.verticalLayout_2.addWidget(self.label_13)
-
         self.Note_Column = QSpinBox(self.frame3)
         self.Note_Column.setObjectName(u"Note_Column")
 
@@ -322,11 +533,6 @@ class Ui_pApp(object):
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
 
-        self.printdivider = QPushButton(self.frame3)
-        self.printdivider.setObjectName(u"printdivider")
-
-        self.verticalLayout_2.addWidget(self.printdivider)
-
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_2.addItem(self.verticalSpacer)
@@ -341,27 +547,54 @@ class Ui_pApp(object):
 
         self.retranslateUi(pApp)
 
+        self.Part_Role.setCurrentIndex(1)
+        self.Stave_Type.setCurrentIndex(0)
+
+
         QMetaObject.connectSlotsByName(pApp)
     # setupUi
 
     def retranslateUi(self, pApp):
         pApp.setWindowTitle(QCoreApplication.translate("pApp", u"p", None))
         self.label_7.setText(QCoreApplication.translate("pApp", u"Score", None))
-        self.label_6.setText(QCoreApplication.translate("pApp", u"Name", None))
         self.label_10.setText(QCoreApplication.translate("pApp", u"Duration", None))
-        self.label.setText(QCoreApplication.translate("pApp", u"Parts", None))
+        self.label.setText(QCoreApplication.translate("pApp", u"Partitures", None))
+        self.PartsListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
+        self.PartsListDel.setText(QCoreApplication.translate("pApp", u"-", None))
         self.bScoreLoad.setText(QCoreApplication.translate("pApp", u"Load", None))
         self.bScoreSave.setText(QCoreApplication.translate("pApp", u"Save", None))
+        self.bRun.setText(QCoreApplication.translate("pApp", u"Run", None))
         self.label_2.setText(QCoreApplication.translate("pApp", u"Partiture", None))
-        self.label_8.setText(QCoreApplication.translate("pApp", u"Name", None))
+        self.label_24.setText(QCoreApplication.translate("pApp", u"Pitch", None))
+        self.Part_Role.setTabText(self.Part_Role.indexOf(self.Part_Role_Main), QCoreApplication.translate("pApp", u"Main", None))
+        self.label_25.setText(QCoreApplication.translate("pApp", u"Transpose", None))
+        self.Part_Role.setTabText(self.Part_Role.indexOf(self.Part_Role_Function), QCoreApplication.translate("pApp", u"Function", None))
+        self.Part_Role.setTabText(self.Part_Role.indexOf(self.Part_Role_None), QCoreApplication.translate("pApp", u"None", None))
         self.label_3.setText(QCoreApplication.translate("pApp", u"Numerator", None))
         self.label_9.setText(QCoreApplication.translate("pApp", u"Denominator", None))
+        self.label_26.setText(QCoreApplication.translate("pApp", u"Build fpp", None))
+        self.Part_BuildFxl.setText("")
+        self.Part_BuildPos.setText("")
+        self.Part_BuildPow.setText("")
         self.label_11.setText(QCoreApplication.translate("pApp", u"Staves", None))
+        self.StavesListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
+        self.StavesListDel.setText(QCoreApplication.translate("pApp", u"-", None))
         self.label_4.setText(QCoreApplication.translate("pApp", u"Stave", None))
-        self.label_15.setText(QCoreApplication.translate("pApp", u"Name", None))
         self.label_16.setText(QCoreApplication.translate("pApp", u"Build", None))
         self.label_17.setText(QCoreApplication.translate("pApp", u"Condition", None))
+        self.label_19.setText(QCoreApplication.translate("pApp", u"File", None))
+        self.Stave_ZeroLength.setText(QCoreApplication.translate("pApp", u"Zero Length", None))
+        self.Stave_Type.setTabText(self.Stave_Type.indexOf(self.Stave_Type_Module), QCoreApplication.translate("pApp", u"Module", None))
+        self.label_20.setText(QCoreApplication.translate("pApp", u"Sequence", None))
+        self.label_21.setText(QCoreApplication.translate("pApp", u"Parameter", None))
+        self.Stave_Type.setTabText(self.Stave_Type.indexOf(self.Stave_Type_Sequence), QCoreApplication.translate("pApp", u"Sequence", None))
+        self.label_22.setText(QCoreApplication.translate("pApp", u"Sample", None))
+        self.Stave_Type.setTabText(self.Stave_Type.indexOf(self.Stave_Type_Sample), QCoreApplication.translate("pApp", u"Sample", None))
+        self.label_23.setText(QCoreApplication.translate("pApp", u"Expression", None))
+        self.Stave_Type.setTabText(self.Stave_Type.indexOf(self.Stave_Type_Expression), QCoreApplication.translate("pApp", u"Expression", None))
         self.label_12.setText(QCoreApplication.translate("pApp", u"Notes", None))
+        self.NotesListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
+        self.NotesListDel.setText(QCoreApplication.translate("pApp", u"-", None))
         self.label_18.setText(QCoreApplication.translate("pApp", u"Matrix", None))
         ___qtablewidgetitem = self.StavesTable.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("pApp", u"0", None));
@@ -379,8 +612,6 @@ class Ui_pApp(object):
         self.StavesTable.setSortingEnabled(__sortingEnabled)
 
         self.label_5.setText(QCoreApplication.translate("pApp", u"Note", None))
-        self.label_13.setText(QCoreApplication.translate("pApp", u"Column", None))
         self.label_14.setText(QCoreApplication.translate("pApp", u"Fxl, Pos, Pow", None))
-        self.printdivider.setText(QCoreApplication.translate("pApp", u"print divider", None))
     # retranslateUi
 

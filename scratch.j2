@@ -1,0 +1,40 @@
+{# Intro #}
+{{ "$( [Intro]\n" }}
+{{ "(l, len, ton, fxl, pos, pow){(\n" }}
+{{ "\t" + "mtn = ton + 12. * 1.; tkt = len  * 2 : 1;\n" }}
+{{ "\t" + "bld = \"\" + fxl + \" \" + pos;\n" }}
+
+
+{# plain #}
+{% for score in scores %}
+ {{ score.Name }}: {{ score.Duration }}
+ {% for part in score.Items %}
+  {{ part.Name }}: {{ part.Numerator }}/{{ part.Denominator }}
+  {% for stave in part.Items %}
+   {{ stave.Name }}: b{{ stave.Build }} ?{{ stave.Condition }}
+   {% for note in stave.Items %}
+    {{ note.Column }}: {{ note.Fxl }} {{ note.Pos }} {{ note.Pow }}
+   {% endfor %}
+  {% endfor %}
+ {% endfor %}
+{% endfor %}
+
+{# [] #}
+{% set slots = [] %}
+{% for part in score.Items %}
+    {% for stave in part.Items %}
+        {{ stave.Name }}: b{{ stave.Build }} ?{{ stave.Condition }} {{ "\n" }}
+        {% if stave.Name not in slots %}
+            {% set _ = slots.append(stave.Name) %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+{% for name in slots %}
+    {{ name }} {{ "\n" }}
+{% endfor %}
+
+{# unique names #}
+{% set names = score.Items|map(attribute='Name')|unique|list %}
+{% for name in names %}
+    {{ name + "\n" }}
+{% endfor %}
