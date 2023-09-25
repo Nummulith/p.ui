@@ -608,8 +608,11 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
         vallist = self.Maps[clss].List
         if vallist != None:
-            par = self.Objs[clss.prev()]
-            self.SetView(vallist, int(par.Index), obj)
+            #par = self.Objs[clss.prev()]
+            #self.SetView(vallist, int(par.Index), obj)
+
+            self.SetView(vallist, vallist.currentRow(), obj)
+            
 
     def DrawStavesTable(self):
         curscore = self.Score[0]
@@ -782,48 +785,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
                 int(xml.attrib['window_height']),
             )
         
-    def LoadScore111(self):
-
-        self.LoadScoreItem()
-        return
-
-
-        self.Score = []
-        score = Score()
-        self.Score.append(score)
-
-        for name, value in xscore.attrib.items():
-            setattr(score, name, value)
-
-        for xpart in xscore:
-            part = Part()
-            score.Items.append(part)
-
-            for name, value in xpart.attrib.items():
-                setattr(part, name, value)
-
-            for xstave in xpart:
-                stave = Stave()
-                part.Items.append(stave)
-
-                for name, value in xstave.attrib.items():
-                    setattr(stave, name, value)
-
-                for xnote in xstave:
-                    note = Note()
-                    stave.Items.append(note)
-
-                    for name, value in xnote.attrib.items():
-                        setattr(note, name, value)
-
-        self.setGeometry(
-            int(xscore.attrib['window_left'  ]),
-            int(xscore.attrib['window_top'   ]),
-            int(xscore.attrib['window_width' ]),
-            int(xscore.attrib['window_height']),
-        )
-
-    def SaveScore(self, paritems = None, parxml = None):
+    def SaveScore(self, reserved = None, paritems = None, parxml = None):
         if paritems == None :
             paritems = self.Score
 
@@ -850,7 +812,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
                 xml.set(attr, str(getattr(item, attr)))
 
             for items in itemss :
-                self.SaveScore(items, xml)
+                self.SaveScore(None, items, xml)
 
 
             if isinstance(item, Score):
@@ -867,49 +829,6 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
                 break
     
     
-    def SaveScore123(self):
-
-        self.SaveScoreItems(self.Score)
-
-        if False :
-         for score in self.Score:
-            xscore = ET.Element("Score")
-
-            for attr in self.Maps[Score].Dict + ["Index"]:
-                xscore.set(attr, str(getattr(score, attr)))
-
-            for part in score.Items:
-                xpart = ET.SubElement(xscore, "Part")
-
-                for attr in self.Maps[Part].Dict + ["Index"]:
-                    xpart.set(attr, str(getattr(part, attr)))
-
-                for stave in part.Items:
-                    xstave = ET.SubElement(xpart, "Stave")
-
-                    for attr in self.Maps[Stave].Dict + ["Index"]:
-                        xstave.set(attr, str(getattr(stave, attr)))
-
-                    for note in stave.Items:
-                        xnote = ET.SubElement(xstave, "Note")
-
-                        for attr in self.Maps[Note].Dict:
-                            xnote.set(attr, str(getattr(note, attr)))
-            
-            #xml_tree = ET.ElementTree(xscore) # Создание XML-документа
-            #xml_tree.write("ScoreSaved.xml") # Сохранение XML-документа в файл
-
-            xscore.set("window_left"  , str(self.geometry().x()))
-            xscore.set("window_top"   , str(self.geometry().y()))
-            xscore.set("window_width" , str(self.geometry().width ()))
-            xscore.set("window_height", str(self.geometry().height()))
-
-            # Сохранение XML с отступами и переносами строк
-            with open("Score.xml", "w") as xml_file:
-                xml_file.write(prettify(xscore))            
-            break
-
-
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Escape:
             self.close()
