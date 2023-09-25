@@ -267,8 +267,112 @@ class Ui_pApp(object):
 
         self.verticalLayout_3.addWidget(self.StavesList)
 
+        self.horizontalLayout_7 = QHBoxLayout()
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.label_6 = QLabel(self.frame1)
+        self.label_6.setObjectName(u"label_6")
+
+        self.horizontalLayout_7.addWidget(self.label_6)
+
+        self.InstrsListAdd = QPushButton(self.frame1)
+        self.InstrsListAdd.setObjectName(u"InstrsListAdd")
+        self.InstrsListAdd.setMaximumSize(QSize(26, 32))
+
+        self.horizontalLayout_7.addWidget(self.InstrsListAdd)
+
+        self.InstrsListDel = QPushButton(self.frame1)
+        self.InstrsListDel.setObjectName(u"InstrsListDel")
+        self.InstrsListDel.setMaximumSize(QSize(26, 32))
+
+        self.horizontalLayout_7.addWidget(self.InstrsListDel)
+
+
+        self.verticalLayout_3.addLayout(self.horizontalLayout_7)
+
+        self.InstrsList = QListWidget(self.frame1)
+        self.InstrsList.setObjectName(u"InstrsList")
+
+        self.verticalLayout_3.addWidget(self.InstrsList)
+
+        self.horizontalLayout_8 = QHBoxLayout()
+        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.label_8 = QLabel(self.frame1)
+        self.label_8.setObjectName(u"label_8")
+
+        self.horizontalLayout_8.addWidget(self.label_8)
+
+        self.BuildsListAdd = QPushButton(self.frame1)
+        self.BuildsListAdd.setObjectName(u"BuildsListAdd")
+        self.BuildsListAdd.setMaximumSize(QSize(26, 32))
+
+        self.horizontalLayout_8.addWidget(self.BuildsListAdd)
+
+        self.BuildsListDel = QPushButton(self.frame1)
+        self.BuildsListDel.setObjectName(u"BuildsListDel")
+        self.BuildsListDel.setMaximumSize(QSize(26, 32))
+
+        self.horizontalLayout_8.addWidget(self.BuildsListDel)
+
+
+        self.verticalLayout_3.addLayout(self.horizontalLayout_8)
+
+        self.BuildsList = QListWidget(self.frame1)
+        self.BuildsList.setObjectName(u"BuildsList")
+
+        self.verticalLayout_3.addWidget(self.BuildsList)
+
 
         self.PanelsLayout.addWidget(self.frame1)
+
+        self.frame5 = QFrame(self.PanelsLayout_2)
+        self.frame5.setObjectName(u"frame5")
+        sizePolicy.setHeightForWidth(self.frame5.sizePolicy().hasHeightForWidth())
+        self.frame5.setSizePolicy(sizePolicy)
+        self.frame5.setFrameShape(QFrame.StyledPanel)
+        self.frame5.setFrameShadow(QFrame.Plain)
+        self.verticalLayout_13 = QVBoxLayout(self.frame5)
+        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
+        self.label_13 = QLabel(self.frame5)
+        self.label_13.setObjectName(u"label_13")
+
+        self.verticalLayout_13.addWidget(self.label_13)
+
+        self.Instr_Name = QLineEdit(self.frame5)
+        self.Instr_Name.setObjectName(u"Instr_Name")
+
+        self.verticalLayout_13.addWidget(self.Instr_Name)
+
+        self.verticalSpacer_8 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_13.addItem(self.verticalSpacer_8)
+
+
+        self.PanelsLayout.addWidget(self.frame5)
+
+        self.frame6 = QFrame(self.PanelsLayout_2)
+        self.frame6.setObjectName(u"frame6")
+        sizePolicy.setHeightForWidth(self.frame6.sizePolicy().hasHeightForWidth())
+        self.frame6.setSizePolicy(sizePolicy)
+        self.frame6.setFrameShape(QFrame.StyledPanel)
+        self.frame6.setFrameShadow(QFrame.Plain)
+        self.verticalLayout_14 = QVBoxLayout(self.frame6)
+        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
+        self.label_15 = QLabel(self.frame6)
+        self.label_15.setObjectName(u"label_15")
+
+        self.verticalLayout_14.addWidget(self.label_15)
+
+        self.Build_Name = QLineEdit(self.frame6)
+        self.Build_Name.setObjectName(u"Build_Name")
+
+        self.verticalLayout_14.addWidget(self.Build_Name)
+
+        self.verticalSpacer_9 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_14.addItem(self.verticalSpacer_9)
+
+
+        self.PanelsLayout.addWidget(self.frame6)
 
         self.frame2 = QFrame(self.PanelsLayout_2)
         self.frame2.setObjectName(u"frame2")
@@ -445,6 +549,7 @@ class Ui_pApp(object):
         sizePolicy.setHeightForWidth(self.frame4.sizePolicy().hasHeightForWidth())
         self.frame4.setSizePolicy(sizePolicy)
         self.frame4.setFrameShape(QFrame.StyledPanel)
+        self.frame4.setFrameShadow(QFrame.Plain)
         self.verticalLayout_5 = QVBoxLayout(self.frame4)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.label_18 = QLabel(self.frame4)
@@ -579,6 +684,14 @@ class Ui_pApp(object):
         self.label_11.setText(QCoreApplication.translate("pApp", u"Staves", None))
         self.StavesListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
         self.StavesListDel.setText(QCoreApplication.translate("pApp", u"-", None))
+        self.label_6.setText(QCoreApplication.translate("pApp", u"Instruments", None))
+        self.InstrsListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
+        self.InstrsListDel.setText(QCoreApplication.translate("pApp", u"-", None))
+        self.label_8.setText(QCoreApplication.translate("pApp", u"Builds", None))
+        self.BuildsListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
+        self.BuildsListDel.setText(QCoreApplication.translate("pApp", u"-", None))
+        self.label_13.setText(QCoreApplication.translate("pApp", u"Instrument", None))
+        self.label_15.setText(QCoreApplication.translate("pApp", u"Build", None))
         self.label_4.setText(QCoreApplication.translate("pApp", u"Stave", None))
         self.label_16.setText(QCoreApplication.translate("pApp", u"Build", None))
         self.label_17.setText(QCoreApplication.translate("pApp", u"Condition", None))

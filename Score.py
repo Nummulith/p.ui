@@ -118,13 +118,20 @@ class Score:
         return Score(self.data)
     
     @staticmethod
+    def prev():
+        return None
+
+    @staticmethod
     def next():
-        return Part
+        return [Part]
 
 class Part:
     def __init__(self, Name="", Numerator=4, Denominator=8):
         self.Items = []
         self.Index = -1
+
+        self.Instrs = []
+        self.Builds = []
 
         self.Name = Name
         self.Numerator = Numerator
@@ -146,7 +153,39 @@ class Part:
 
     @staticmethod
     def next():
-        return Stave
+        return [Stave, Instr, Build]
+
+class Instr:
+    def __init__(self, Name=""):
+        self.Name  = Name
+        self.Type = "Module"
+        self.Sequence = ""
+        self.Parameter = ""
+        self.Sample = ""
+        self.Expression = ""
+
+    def View(self):
+        return self.Name
+    
+    @staticmethod
+    def prev():
+        return Part
+
+    @staticmethod
+    def next():
+        return []
+
+class Build:
+    def __init__(self, Name=""):
+        self.Name  = Name
+
+    @staticmethod
+    def prev():
+        return Part
+
+    @staticmethod
+    def next():
+        return []
 
 class Stave:
     def __init__(self, Name=""):
@@ -172,7 +211,7 @@ class Stave:
 
     @staticmethod
     def next():
-        return Note
+        return [Note]
 
 class Note:
     def __init__(self, Column=0, Fxl="", Pos="", Pow=""):
@@ -185,6 +224,10 @@ class Note:
     def prev():
         return Stave
     
+    @staticmethod
+    def next():
+        return []
+
     def View(self):
         return f"{self.Column}: {self.CellView()}"
     
@@ -250,6 +293,24 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
     def updateObjectHandler(self, clss, attr_name, widget):
         return lambda reserved=None, c=clss, a=attr_name, w=widget: self.updateObject(reserved, c, a, w)
     
+    def Add(self, res0, clss):
+        print("(+)", clss)
+
+        obj = self.Objs[clss.prev()]
+        if clss == Build :
+            items = obj.Builds
+        elif clss == Instr :
+            items = obj.Instrs
+        else :
+            items = obj.Items
+
+        items.append(clss("* New *"))
+        self.Position([clss.prev()], True)
+
+
+    def AddHandler(self, clss):
+        return lambda res0 = None, c=clss: self.Add(res0, c)
+
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -265,6 +326,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         self.bRun.clicked.connect(self.Run)
 
         self.PartsList .itemSelectionChanged.connect(self.PartsSelectionChanged )
+        self.BuildsList.itemSelectionChanged.connect(self.BuildsSelectionChanged)
         self.StavesList.itemSelectionChanged.connect(self.StavesSelectionChanged)
         self.NotesList .itemSelectionChanged.connect(self.NotesSelectionChanged )
         
@@ -278,6 +340,9 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         self.StavesTable.verticalHeader()  .setMinimumSectionSize(CELL_SIZE)
         self.StavesTable.verticalHeader()  .setMaximumSectionSize(CELL_SIZE)
 
+
+        self.BuildsListAdd.clicked.connect(self.AddHandler(Build))
+        
 
 
         # visibility buttons 
@@ -335,7 +400,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
         self.LoadScore()
         self.InitMaps()
-        self.Position(Score, True, 0)
+        self.Position([Score], True, 0)
         self.DrawStavesTable()
 
 
@@ -343,110 +408,131 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         self.Maps = {}
         self.Maps[Score] = Map(self, Score)
         self.Maps[Part ] = Map(self, Part , self.PartsList )
+        self.Maps[Instr] = Map(self, Instr, self.InstrsList)
+        self.Maps[Build] = Map(self, Build, self.BuildsList)
         self.Maps[Stave] = Map(self, Stave, self.StavesList)
         self.Maps[Note ] = Map(self, Note , self.NotesList )
-#        self.Maps[Score].FillModel(self.Score)
 
         self.Objs = {}
 
-    def Position(self, clss, fillList = False, index = None):
-        curmap = self.Maps[clss]
+    def Position(self, clsss, fillList = False, index = None):
+      
+        for clss in clsss:
 
-        if   clss == Score :
-            par = None
-            items = self.Score
-            curind = 0
-        else: #if clss != Note 
-            par = self.Objs[clss.prev()]
-            items  = par.Items
-            if index == None:
-                curind = int(par.Index)
-            else:
-                curind = index[0] if isinstance(index, list) else index
-                par.Index = curind
+            curmap = self.Maps[clss]
 
-        self.Objs[clss] = items[curind] if curind != -1 else None
+            if   clss == Score :
+                par = None
+                items = self.Score
+                curind = 0
+            else: #if clss != Note 
+                par = self.Objs[clss.prev()]
+                items  = par.Items
+                if index == None:
+                    curind = int(par.Index)
+                else:
+                    curind = index[0] if isinstance(index, list) else index
+                    par.Index = curind
 
-        empty = len(items) == 0
+            self.Objs[clss] = items[curind] if curind != -1 else None
 
+            empty = len(items) == 0
 
-        if fillList:
-            curmap.FillModel(items)
-
-        curmap.PosModel(self, curind)
-
-
-        if   clss == Part:
-            
-            self.PartsList .itemSelectionChanged.disconnect()
 
             if fillList:
-                self.PartsList.clear()
+                curmap.FillModel(items)
 
-                for part in items:
-                    self.PartsList.addItem(part.Name)
-
-            self.PartsList .setCurrentRow(curind)
-
-            self.PartsList .itemSelectionChanged.connect(self.PartsSelectionChanged)
-
-        elif clss == Stave:
-
-            self.StavesList.itemSelectionChanged.disconnect()
-
-            if fillList :
-                self.StavesList.clear()
-                #self.StavesTable.setRowCount(0)
-                for stave in items:
-                    self.StavesList.addItem(stave.Name)
-
-            self.StavesList.setCurrentRow(curind)
-            
-            self.StavesList.itemSelectionChanged.connect(self.StavesSelectionChanged)
-
-        elif clss == Note:
-
-            self.NotesList.itemSelectionChanged.disconnect()
-
-            if fillList :
-                self.NotesList.clear()
-
-                for i, note in zip(range(0, len(items)), items):
-                    self.NotesList.addItem("")
-                    self.SetView(self.NotesList, i, note)
-
-            self.NotesList.setCurrentRow(curind)
-
-            self.NotesList.itemSelectionChanged.connect(self.NotesSelectionChanged)
+            curmap.PosModel(self, curind)
 
 
-        for attr_name in curmap.Dict:
-            cl_attr_name = clss.__name__ + "_" + attr_name
-            wgt = getattr(self, cl_attr_name)
-            if index != -1:
-                if isinstance(wgt, QtWidgets.QTabWidget):
+            if   clss == Part:
+                
+                self.PartsList .itemSelectionChanged.disconnect()
 
-                    wgt.currentChanged.disconnect()
+                if fillList:
+                    self.PartsList.clear()
 
-                    wgt.setCurrentWidget(
-                        wgt.findChild(QtWidgets.QWidget, wgt.objectName() + "_" + getattr(self.Objs[clss], attr_name))
-                    )
+                    for part in items:
+                        self.PartsList.addItem(part.Name)
 
-                    wgt.currentChanged.connect(
-                        self.updateObjectHandler(clss, attr_name, wgt)
-                    )
+                self.PartsList .setCurrentRow(curind)
+
+                self.PartsList .itemSelectionChanged.connect(self.PartsSelectionChanged)
 
 
-            else: # empty cell
-                if isinstance(wgt, QtWidgets.QSpinBox):
-                    wgt.setValue(0)
-                elif isinstance(wgt, QtWidgets.QLineEdit):
-                    wgt.setText("")
+                self.BuildsList.itemSelectionChanged.disconnect()
+
+                if fillList:
+                    self.BuildsList.clear()
+
+                    for build in self.Objs[Part].Builds :
+                        self.BuildsList.addItem(build.Name)
+
+                #self.BuildsList.setCurrentRow(curind)
+
+                self.BuildsList.itemSelectionChanged.connect(self.BuildsSelectionChanged)
+
+            elif clss == Stave:
+
+                self.StavesList.itemSelectionChanged.disconnect()
+
+                if fillList :
+                    self.StavesList.clear()
+                    #self.StavesTable.setRowCount(0)
+                    for stave in items:
+                        self.StavesList.addItem(stave.Name)
+
+                self.StavesList.setCurrentRow(curind)
+                
+                self.StavesList.itemSelectionChanged.connect(self.StavesSelectionChanged)
+
+            elif clss == Note:
+
+                self.NotesList.itemSelectionChanged.disconnect()
+
+                if fillList :
+                    self.NotesList.clear()
+
+                    for i, note in zip(range(0, len(items)), items):
+                        self.NotesList.addItem("")
+                        self.SetView(self.NotesList, i, note)
+
+                self.NotesList.setCurrentRow(curind)
+
+                self.NotesList.itemSelectionChanged.connect(self.NotesSelectionChanged)
 
 
-        if clss != Note:
-            nxtind = index[1] if isinstance(index, list) else None
-            self.Position(clss.next(), True, nxtind)
+            for attr_name in curmap.Dict:
+                cl_attr_name = clss.__name__ + "_" + attr_name
+                #wgt = getattr(self, cl_attr_name)
+                wgt = self.findChild(QtWidgets.QWidget, cl_attr_name)
+
+                if wgt is None:
+                    continue
+
+                elif index != -1 :
+                    if isinstance(wgt, QtWidgets.QTabWidget) :
+                        wgt.currentChanged.disconnect()
+
+                        wgt.setCurrentWidget(
+                            wgt.findChild(QtWidgets.QWidget, wgt.objectName() + "_" + getattr(self.Objs[clss], attr_name))
+                        )
+
+                        wgt.currentChanged.connect(
+                            self.updateObjectHandler(clss, attr_name, wgt)
+                        )
+
+
+                else: # empty cell
+                    if isinstance(wgt, QtWidgets.QSpinBox):
+                        wgt.setValue(0)
+                    elif isinstance(wgt, QtWidgets.QLineEdit):
+                        wgt.setText("")
+
+
+            if clss != Note:
+                nxtind = index[1] if isinstance(index, list) else None
+                self.Position(clss.next(), True, nxtind)
 
     def SetView(self, vallist, index, Obj):
         item = vallist.item(index)
@@ -559,15 +645,19 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
 
     def PartsSelectionChanged(self):
-        self.Position(Part , False, self.PartsList .currentRow())
+        self.Position([Part ], False, self.PartsList .currentRow())
+        self.DrawStavesTable()
+
+    def BuildsSelectionChanged(self):
+        self.Position([Part ], False, self.PartsList .currentRow())
         self.DrawStavesTable()
 
     def StavesSelectionChanged(self):
-        self.Position(Stave, False, self.StavesList.currentRow())
+        self.Position([Stave], False, self.StavesList.currentRow())
         self.PosStavesTable()
 
     def NotesSelectionChanged(self):
-        self.Position(Note , False, self.NotesList .currentRow())
+        self.Position([Note ], False, self.NotesList .currentRow())
         self.PosStavesTable()
 
     def StavesTableCellClicked(self, row, col):
@@ -635,9 +725,39 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         song.Items[1].Items[1].Items.append(Note(4, "5", "g", "k"))
         song.Items[1].Items[1].Items.append(Note(5, "6", "h", "l"))
 
+
+    def LoadScoreItem(self, paritems = None, xml = None):
+        if xml == None:
+            xml_file_path = "Score.xml"
+            xml = ET.parse(xml_file_path).getroot() # Чтение XML файла
+
+            self.Score = []
+            paritems = self.Score
+
+        clss = globals()[xml.tag]
+        item = clss()
+
+        for name, value in xml.attrib.items():
+            setattr(item, name, value)
+
+        paritems.append(item)
+
+        for xitem in xml:
+            if   xitem.tag == "Instr" :
+                items = item.Instrs
+            elif xitem.tag == "Build" :
+                items = item.Builds
+            else :
+                items = item.Items
+
+            self.LoadScoreItem(items, xitem)
+        
+        
     def LoadScore(self):
-        xml_file_path = "Score.xml" # Путь к XML файлу
-        xscore = ET.parse(xml_file_path).getroot() # Чтение XML файла
+
+        self.LoadScoreItem()
+        return
+
 
         self.Score = []
         score = Score()
@@ -674,9 +794,54 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
             int(xscore.attrib['window_height']),
         )
 
+    def SaveScoreItems(self, paritems = None, parxml = None):
+        for item in paritems:
+            clss = type(item)
+
+            if clss == Score :
+                xml = ET.Element(clss.__name__)
+            else :
+                xml = ET.SubElement(parxml, clss.__name__)
+            
+            if   clss == Part :
+                itemss = [item.Items, item.Instrs, item.Builds]
+                extratt = ["Index"]
+            elif clss == Note or clss == Instr or clss == Build :
+                itemss = []
+                extratt = []
+            else :
+                itemss = [item.Items]
+                extratt = ["Index"]
+
+
+            for attr in self.Maps[clss].Dict + extratt :
+                xml.set(attr, str(getattr(item, attr)))
+
+            for items in itemss :
+                self.SaveScoreItems(items, xml)
+
+
+            if isinstance(item, Score):
+                #xml_tree = ET.ElementTree(xscore) # Создание XML-документа
+                #xml_tree.write("ScoreSaved.xml") # Сохранение XML-документа в файл
+
+                xml.set("window_left"  , str(self.geometry().x()))
+                xml.set("window_top"   , str(self.geometry().y()))
+                xml.set("window_width" , str(self.geometry().width ()))
+                xml.set("window_height", str(self.geometry().height()))
+
+                with open("Score.xml", "w") as xml_file:
+                    xml_file.write(prettify(xml)) # Сохранение XML с отступами и переносами строк
+                break
+    
+    
     def SaveScore(self):
-        for score in self.Score:
-            xscore = ET.Element("Score") # Создание корневого элемента XML
+
+        self.SaveScoreItems(self.Score)
+
+        if False :
+         for score in self.Score:
+            xscore = ET.Element("Score")
 
             for attr in self.Maps[Score].Dict + ["Index"]:
                 xscore.set(attr, str(getattr(score, attr)))
