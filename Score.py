@@ -117,6 +117,9 @@ class Score:
         print("Объект копируется без моего ведома")
         return Score(self.data)
     
+    def GetItems(self, clss):
+        return self.Items
+    
     @staticmethod
     def prev():
         return None
@@ -147,6 +150,14 @@ class Part:
     def View(self):
         return self.Name
     
+    def GetItems(self, clss):
+        if clss == Build:
+            return self.Builds
+        elif clss == Instr:
+            return self.Instrs
+        else :
+            return self.Items
+    
     @staticmethod
     def prev():
         return Score
@@ -167,6 +178,9 @@ class Instr:
     def View(self):
         return self.Name
     
+    def GetItems(self, clss):
+        return self.Items
+        
     @staticmethod
     def prev():
         return Part
@@ -179,6 +193,12 @@ class Build:
     def __init__(self, Name=""):
         self.Name  = Name
 
+    def GetItems(self, clss):
+        return self.Items
+        
+    def View(self):
+        return self.Name
+    
     @staticmethod
     def prev():
         return Part
@@ -194,6 +214,7 @@ class Stave:
 
         self.Name  = Name
         self.Build = ""
+        self.Instr = ""
         self.Condition = ""
         self.Type = "Module"
         self.ZeroLength = False
@@ -202,6 +223,9 @@ class Stave:
         self.Sample = ""
         self.Expression = ""
 
+    def GetItems(self, clss):
+        return self.Items
+        
     def View(self):
         return self.Name
     
@@ -294,15 +318,8 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         return lambda reserved=None, c=clss, a=attr_name, w=widget: self.updateObject(reserved, c, a, w)
     
     def Add(self, res0, clss):
-        print("(+)", clss)
-
         obj = self.Objs[clss.prev()]
-        if clss == Build :
-            items = obj.Builds
-        elif clss == Instr :
-            items = obj.Instrs
-        else :
-            items = obj.Items
+        items = obj.GetItems(clss)
 
         items.append(clss("* New *"))
         self.Position([clss.prev()], True)
@@ -327,6 +344,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
         self.PartsList .itemSelectionChanged.connect(self.PartsSelectionChanged )
         self.BuildsList.itemSelectionChanged.connect(self.BuildsSelectionChanged)
+        self.InstrsList.itemSelectionChanged.connect(self.InstrsSelectionChanged)
         self.StavesList.itemSelectionChanged.connect(self.StavesSelectionChanged)
         self.NotesList .itemSelectionChanged.connect(self.NotesSelectionChanged )
         
@@ -341,8 +359,11 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         self.StavesTable.verticalHeader()  .setMaximumSectionSize(CELL_SIZE)
 
 
+        self.PartsListAdd .clicked.connect(self.AddHandler(Part ))
+        self.StavesListAdd.clicked.connect(self.AddHandler(Stave))
+        self.InstrsListAdd.clicked.connect(self.AddHandler(Instr))
         self.BuildsListAdd.clicked.connect(self.AddHandler(Build))
-        
+        self.NotesListAdd .clicked.connect(self.AddHandler(Note ))
 
 
         # visibility buttons 
@@ -427,16 +448,20 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
                 curind = 0
             else: #if clss != Note 
                 par = self.Objs[clss.prev()]
-                items  = par.Items
+
+                items = par.GetItems(clss)
+                indexed = not (clss == Build or clss == Instr)
+
                 if index == None:
-                    curind = int(par.Index)
+                    curind = int(par.Index) if indexed else -1
                 else:
                     curind = index[0] if isinstance(index, list) else index
-                    par.Index = curind
+                    if indexed:
+                        par.Index = curind
 
             self.Objs[clss] = items[curind] if curind != -1 else None
 
-            empty = len(items) == 0
+            #empty = len(items) == 0
 
 
             if fillList:
@@ -459,6 +484,22 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
                 self.PartsList .itemSelectionChanged.connect(self.PartsSelectionChanged)
 
+
+            elif clss == Instr:
+
+                self.InstrsList.itemSelectionChanged.disconnect()
+
+                if fillList:
+                    self.InstrsList.clear()
+
+                    for instr in self.Objs[Part].Instrs :
+                        self.InstrsList.addItem(instr.Name)
+
+                #self.BuildsList.setCurrentRow(curind)
+
+                self.InstrsList.itemSelectionChanged.connect(self.InstrsSelectionChanged)
+
+            elif clss == Build:
 
                 self.BuildsList.itemSelectionChanged.disconnect()
 
@@ -511,7 +552,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
                     continue
 
                 elif index != -1 :
-                    if isinstance(wgt, QtWidgets.QTabWidget) :
+                    if isinstance(wgt, QtWidgets.QTabWidget) and self.Objs[clss] != None:
                         wgt.currentChanged.disconnect()
 
                         wgt.setCurrentWidget(
@@ -559,8 +600,9 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         if obj == None:
             obj = clss()
             par = self.Objs[clss.prev()]
-            par.Items.append(obj)
-            self.Position(clss, True, len(par.Items) - 1)
+            items = par.GetItems(clss)
+            items.append(obj)
+            self.Position([clss], True, len(items) - 1)
 
         setattr(obj, attr, value)
 
@@ -568,26 +610,6 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         if vallist != None:
             par = self.Objs[clss.prev()]
             self.SetView(vallist, int(par.Index), obj)
-
-    def updateObject__obs(self, map, a, w):
-        items = self.Score
-        for curmap in self.Maps.values():
-            index = curmap.Mapper.currentIndex()
-            obj = items[index]
-
-            if curmap.Mapper != map.Mapper:
-                items = obj.Items
-            else:
-                if isinstance(w, QtWidgets.QLineEdit):
-                    value = w.text()
-                elif isinstance(w, QtWidgets.QSpinBox):
-                    value = w.value()
-                else: 
-                    value = "" # ?
-
-                setattr(obj, a, value)
-
-                break
 
     def DrawStavesTable(self):
         curscore = self.Score[0]
@@ -649,8 +671,10 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         self.DrawStavesTable()
 
     def BuildsSelectionChanged(self):
-        self.Position([Part ], False, self.PartsList .currentRow())
-        self.DrawStavesTable()
+        self.Position([Build], False, self.BuildsList .currentRow())
+
+    def InstrsSelectionChanged(self):
+        self.Position([Instr], False, self.InstrsList .currentRow())
 
     def StavesSelectionChanged(self):
         self.Position([Stave], False, self.StavesList.currentRow())
@@ -661,8 +685,6 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         self.PosStavesTable()
 
     def StavesTableCellClicked(self, row, col):
-#        self.Position(Stave, False, row)
-
         curscore = self.Score[0]
         curpart  = curscore.Items[int(curscore.Index)]
         curstave = curpart .Items[row] # int(curpart .Index)
@@ -676,7 +698,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
                 ind = curind
                 break
         
-        self.Position(Stave, False, [row, ind])
+        self.Position([Stave], False, [row, ind])
 
         if ind == -1:
             self.Note_Column.setValue(col)
@@ -726,7 +748,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         song.Items[1].Items[1].Items.append(Note(5, "6", "h", "l"))
 
 
-    def LoadScoreItem(self, paritems = None, xml = None):
+    def LoadScore(self, paritems = None, xml = None):
         if xml == None:
             xml_file_path = "Score.xml"
             xml = ET.parse(xml_file_path).getroot() # Чтение XML файла
@@ -750,10 +772,17 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
             else :
                 items = item.Items
 
-            self.LoadScoreItem(items, xitem)
+            self.LoadScore(items, xitem)
         
+        if clss == Score :
+            self.setGeometry(
+                int(xml.attrib['window_left'  ]),
+                int(xml.attrib['window_top'   ]),
+                int(xml.attrib['window_width' ]),
+                int(xml.attrib['window_height']),
+            )
         
-    def LoadScore(self):
+    def LoadScore111(self):
 
         self.LoadScoreItem()
         return
@@ -794,7 +823,10 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
             int(xscore.attrib['window_height']),
         )
 
-    def SaveScoreItems(self, paritems = None, parxml = None):
+    def SaveScore(self, paritems = None, parxml = None):
+        if paritems == None :
+            paritems = self.Score
+
         for item in paritems:
             clss = type(item)
 
@@ -818,7 +850,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
                 xml.set(attr, str(getattr(item, attr)))
 
             for items in itemss :
-                self.SaveScoreItems(items, xml)
+                self.SaveScore(items, xml)
 
 
             if isinstance(item, Score):
@@ -835,7 +867,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
                 break
     
     
-    def SaveScore(self):
+    def SaveScore123(self):
 
         self.SaveScoreItems(self.Score)
 

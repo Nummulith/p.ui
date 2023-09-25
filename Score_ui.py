@@ -342,6 +342,109 @@ class Ui_pApp(object):
 
         self.verticalLayout_13.addWidget(self.Instr_Name)
 
+        self.Instr_Type = QTabWidget(self.frame5)
+        self.Instr_Type.setObjectName(u"Instr_Type")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.Instr_Type.sizePolicy().hasHeightForWidth())
+        self.Instr_Type.setSizePolicy(sizePolicy2)
+        self.Instr_Type.setMaximumSize(QSize(6000, 200))
+        self.Instr_Type.setBaseSize(QSize(0, 0))
+        self.Instr_Type_Module = QWidget()
+        self.Instr_Type_Module.setObjectName(u"Instr_Type_Module")
+        self.verticalLayout_7 = QVBoxLayout(self.Instr_Type_Module)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.label_19 = QLabel(self.Instr_Type_Module)
+        self.label_19.setObjectName(u"label_19")
+
+        self.verticalLayout_7.addWidget(self.label_19)
+
+        self.Instr_Module = QLineEdit(self.Instr_Type_Module)
+        self.Instr_Module.setObjectName(u"Instr_Module")
+
+        self.verticalLayout_7.addWidget(self.Instr_Module)
+
+        self.Instr_ZeroLength = QCheckBox(self.Instr_Type_Module)
+        self.Instr_ZeroLength.setObjectName(u"Instr_ZeroLength")
+
+        self.verticalLayout_7.addWidget(self.Instr_ZeroLength)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_7.addItem(self.verticalSpacer_2)
+
+        self.Instr_Type.addTab(self.Instr_Type_Module, "")
+        self.Instr_Type_Sequence = QWidget()
+        self.Instr_Type_Sequence.setObjectName(u"Instr_Type_Sequence")
+        self.verticalLayout_8 = QVBoxLayout(self.Instr_Type_Sequence)
+        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
+        self.label_20 = QLabel(self.Instr_Type_Sequence)
+        self.label_20.setObjectName(u"label_20")
+
+        self.verticalLayout_8.addWidget(self.label_20)
+
+        self.Instr_Sequence = QLineEdit(self.Instr_Type_Sequence)
+        self.Instr_Sequence.setObjectName(u"Instr_Sequence")
+
+        self.verticalLayout_8.addWidget(self.Instr_Sequence)
+
+        self.label_21 = QLabel(self.Instr_Type_Sequence)
+        self.label_21.setObjectName(u"label_21")
+
+        self.verticalLayout_8.addWidget(self.label_21)
+
+        self.Instr_Parameter = QLineEdit(self.Instr_Type_Sequence)
+        self.Instr_Parameter.setObjectName(u"Instr_Parameter")
+
+        self.verticalLayout_8.addWidget(self.Instr_Parameter)
+
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_8.addItem(self.verticalSpacer_3)
+
+        self.Instr_Type.addTab(self.Instr_Type_Sequence, "")
+        self.Instr_Type_Sample = QWidget()
+        self.Instr_Type_Sample.setObjectName(u"Instr_Type_Sample")
+        self.verticalLayout_9 = QVBoxLayout(self.Instr_Type_Sample)
+        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.label_22 = QLabel(self.Instr_Type_Sample)
+        self.label_22.setObjectName(u"label_22")
+
+        self.verticalLayout_9.addWidget(self.label_22)
+
+        self.Instr_Sample = QLineEdit(self.Instr_Type_Sample)
+        self.Instr_Sample.setObjectName(u"Instr_Sample")
+
+        self.verticalLayout_9.addWidget(self.Instr_Sample)
+
+        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_9.addItem(self.verticalSpacer_4)
+
+        self.Instr_Type.addTab(self.Instr_Type_Sample, "")
+        self.Instr_Type_Expression = QWidget()
+        self.Instr_Type_Expression.setObjectName(u"Instr_Type_Expression")
+        self.verticalLayout_10 = QVBoxLayout(self.Instr_Type_Expression)
+        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
+        self.label_23 = QLabel(self.Instr_Type_Expression)
+        self.label_23.setObjectName(u"label_23")
+
+        self.verticalLayout_10.addWidget(self.label_23)
+
+        self.Instr_Expression = QLineEdit(self.Instr_Type_Expression)
+        self.Instr_Expression.setObjectName(u"Instr_Expression")
+
+        self.verticalLayout_10.addWidget(self.Instr_Expression)
+
+        self.verticalSpacer_5 = QSpacerItem(20, 101, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_10.addItem(self.verticalSpacer_5)
+
+        self.Instr_Type.addTab(self.Instr_Type_Expression, "")
+
+        self.verticalLayout_13.addWidget(self.Instr_Type)
+
         self.verticalSpacer_8 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_13.addItem(self.verticalSpacer_8)
@@ -410,109 +513,6 @@ class Ui_pApp(object):
         self.Stave_Condition.setObjectName(u"Stave_Condition")
 
         self.verticalLayout_6.addWidget(self.Stave_Condition)
-
-        self.Stave_Type = QTabWidget(self.frame2)
-        self.Stave_Type.setObjectName(u"Stave_Type")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.Stave_Type.sizePolicy().hasHeightForWidth())
-        self.Stave_Type.setSizePolicy(sizePolicy2)
-        self.Stave_Type.setMaximumSize(QSize(6000, 200))
-        self.Stave_Type.setBaseSize(QSize(0, 0))
-        self.Stave_Type_Module = QWidget()
-        self.Stave_Type_Module.setObjectName(u"Stave_Type_Module")
-        self.verticalLayout_7 = QVBoxLayout(self.Stave_Type_Module)
-        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
-        self.label_19 = QLabel(self.Stave_Type_Module)
-        self.label_19.setObjectName(u"label_19")
-
-        self.verticalLayout_7.addWidget(self.label_19)
-
-        self.Stave_Module = QLineEdit(self.Stave_Type_Module)
-        self.Stave_Module.setObjectName(u"Stave_Module")
-
-        self.verticalLayout_7.addWidget(self.Stave_Module)
-
-        self.Stave_ZeroLength = QCheckBox(self.Stave_Type_Module)
-        self.Stave_ZeroLength.setObjectName(u"Stave_ZeroLength")
-
-        self.verticalLayout_7.addWidget(self.Stave_ZeroLength)
-
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_7.addItem(self.verticalSpacer_2)
-
-        self.Stave_Type.addTab(self.Stave_Type_Module, "")
-        self.Stave_Type_Sequence = QWidget()
-        self.Stave_Type_Sequence.setObjectName(u"Stave_Type_Sequence")
-        self.verticalLayout_8 = QVBoxLayout(self.Stave_Type_Sequence)
-        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
-        self.label_20 = QLabel(self.Stave_Type_Sequence)
-        self.label_20.setObjectName(u"label_20")
-
-        self.verticalLayout_8.addWidget(self.label_20)
-
-        self.Stave_Sequence = QLineEdit(self.Stave_Type_Sequence)
-        self.Stave_Sequence.setObjectName(u"Stave_Sequence")
-
-        self.verticalLayout_8.addWidget(self.Stave_Sequence)
-
-        self.label_21 = QLabel(self.Stave_Type_Sequence)
-        self.label_21.setObjectName(u"label_21")
-
-        self.verticalLayout_8.addWidget(self.label_21)
-
-        self.Stave_Parameter = QLineEdit(self.Stave_Type_Sequence)
-        self.Stave_Parameter.setObjectName(u"Stave_Parameter")
-
-        self.verticalLayout_8.addWidget(self.Stave_Parameter)
-
-        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_8.addItem(self.verticalSpacer_3)
-
-        self.Stave_Type.addTab(self.Stave_Type_Sequence, "")
-        self.Stave_Type_Sample = QWidget()
-        self.Stave_Type_Sample.setObjectName(u"Stave_Type_Sample")
-        self.verticalLayout_9 = QVBoxLayout(self.Stave_Type_Sample)
-        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
-        self.label_22 = QLabel(self.Stave_Type_Sample)
-        self.label_22.setObjectName(u"label_22")
-
-        self.verticalLayout_9.addWidget(self.label_22)
-
-        self.Stave_Sample = QLineEdit(self.Stave_Type_Sample)
-        self.Stave_Sample.setObjectName(u"Stave_Sample")
-
-        self.verticalLayout_9.addWidget(self.Stave_Sample)
-
-        self.verticalSpacer_4 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_9.addItem(self.verticalSpacer_4)
-
-        self.Stave_Type.addTab(self.Stave_Type_Sample, "")
-        self.Stave_Type_Expression = QWidget()
-        self.Stave_Type_Expression.setObjectName(u"Stave_Type_Expression")
-        self.verticalLayout_10 = QVBoxLayout(self.Stave_Type_Expression)
-        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
-        self.label_23 = QLabel(self.Stave_Type_Expression)
-        self.label_23.setObjectName(u"label_23")
-
-        self.verticalLayout_10.addWidget(self.label_23)
-
-        self.Stave_Expression = QLineEdit(self.Stave_Type_Expression)
-        self.Stave_Expression.setObjectName(u"Stave_Expression")
-
-        self.verticalLayout_10.addWidget(self.Stave_Expression)
-
-        self.verticalSpacer_5 = QSpacerItem(20, 101, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_10.addItem(self.verticalSpacer_5)
-
-        self.Stave_Type.addTab(self.Stave_Type_Expression, "")
-
-        self.verticalLayout_6.addWidget(self.Stave_Type)
 
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
@@ -652,8 +652,8 @@ class Ui_pApp(object):
 
         self.retranslateUi(pApp)
 
-        self.Part_Role.setCurrentIndex(1)
-        self.Stave_Type.setCurrentIndex(0)
+        self.Part_Role.setCurrentIndex(0)
+        self.Instr_Type.setCurrentIndex(3)
 
 
         QMetaObject.connectSlotsByName(pApp)
@@ -691,20 +691,20 @@ class Ui_pApp(object):
         self.BuildsListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
         self.BuildsListDel.setText(QCoreApplication.translate("pApp", u"-", None))
         self.label_13.setText(QCoreApplication.translate("pApp", u"Instrument", None))
+        self.label_19.setText(QCoreApplication.translate("pApp", u"File", None))
+        self.Instr_ZeroLength.setText(QCoreApplication.translate("pApp", u"Zero Length", None))
+        self.Instr_Type.setTabText(self.Instr_Type.indexOf(self.Instr_Type_Module), QCoreApplication.translate("pApp", u"Module", None))
+        self.label_20.setText(QCoreApplication.translate("pApp", u"Sequence", None))
+        self.label_21.setText(QCoreApplication.translate("pApp", u"Parameter", None))
+        self.Instr_Type.setTabText(self.Instr_Type.indexOf(self.Instr_Type_Sequence), QCoreApplication.translate("pApp", u"Sequence", None))
+        self.label_22.setText(QCoreApplication.translate("pApp", u"Sample", None))
+        self.Instr_Type.setTabText(self.Instr_Type.indexOf(self.Instr_Type_Sample), QCoreApplication.translate("pApp", u"Sample", None))
+        self.label_23.setText(QCoreApplication.translate("pApp", u"Expression", None))
+        self.Instr_Type.setTabText(self.Instr_Type.indexOf(self.Instr_Type_Expression), QCoreApplication.translate("pApp", u"Expression", None))
         self.label_15.setText(QCoreApplication.translate("pApp", u"Build", None))
         self.label_4.setText(QCoreApplication.translate("pApp", u"Stave", None))
         self.label_16.setText(QCoreApplication.translate("pApp", u"Build", None))
         self.label_17.setText(QCoreApplication.translate("pApp", u"Condition", None))
-        self.label_19.setText(QCoreApplication.translate("pApp", u"File", None))
-        self.Stave_ZeroLength.setText(QCoreApplication.translate("pApp", u"Zero Length", None))
-        self.Stave_Type.setTabText(self.Stave_Type.indexOf(self.Stave_Type_Module), QCoreApplication.translate("pApp", u"Module", None))
-        self.label_20.setText(QCoreApplication.translate("pApp", u"Sequence", None))
-        self.label_21.setText(QCoreApplication.translate("pApp", u"Parameter", None))
-        self.Stave_Type.setTabText(self.Stave_Type.indexOf(self.Stave_Type_Sequence), QCoreApplication.translate("pApp", u"Sequence", None))
-        self.label_22.setText(QCoreApplication.translate("pApp", u"Sample", None))
-        self.Stave_Type.setTabText(self.Stave_Type.indexOf(self.Stave_Type_Sample), QCoreApplication.translate("pApp", u"Sample", None))
-        self.label_23.setText(QCoreApplication.translate("pApp", u"Expression", None))
-        self.Stave_Type.setTabText(self.Stave_Type.indexOf(self.Stave_Type_Expression), QCoreApplication.translate("pApp", u"Expression", None))
         self.label_12.setText(QCoreApplication.translate("pApp", u"Notes", None))
         self.NotesListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
         self.NotesListDel.setText(QCoreApplication.translate("pApp", u"-", None))

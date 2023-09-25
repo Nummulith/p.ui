@@ -1,29 +1,33 @@
 <?xml version="1.0" ?>
-<Score Name="" Duration="0" Index="1" window_left="1541" window_top="523" window_width="1872" window_height="965">
-	<Part Name="BBBUUUU" Numerator="5" Denominator="8" Role="Function" Pitch="0" Transpose="0" BuildFxl="True" BuildPos="True" BuildPow="False" Index="1">
-		<Stave Name="Voice" Build="X1" Condition="zs!0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="2">
+<Score Name="123" Duration="0" Index="1" window_left="1295" window_top="578" window_width="2275" window_height="1116">
+	<Part Name="BBBUUU" Numerator="5" Denominator="8" Role="Function" Pitch="0" Transpose="0" BuildFxl="True" BuildPos="True" BuildPow="False" Index="0">
+		<Stave Name="Voice" Build="X1" Instr="" Condition="zs!0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="2">
 			<Note Column="1" Fxl="4" Pos="0" Pow="S"/>
 			<Note Column="3" Fxl="1" Pos="0" Pow="x"/>
 			<Note Column="2" Fxl="1" Pos="0" Pow="S"/>
 		</Stave>
-		<Stave Name="Nums" Build="123" Condition="z#0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="0">
+		<Stave Name="Nums" Build="123" Instr="" Condition="z#0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="0">
 			<Note Column="2" Fxl="Z" Pos="1" Pow="3"/>
 			<Note Column="1" Fxl="1" Pos="0" Pow="S"/>
 			<Note Column="0" Fxl="1" Pos="0" Pow="E"/>
 			<Note Column="3" Fxl="A" Pos="2" Pow="3"/>
 		</Stave>
+		<Build Name="BBUUbu"/>
+		<Build Name="* New *"/>
 	</Part>
 	<Part Name="Drums" Numerator="8" Denominator="9" Role="Main" Pitch="0" Transpose="0" BuildFxl="True" BuildPos="True" BuildPow="False" Index="1">
-		<Stave Name="s0c2" Build="X" Condition="pos!0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="2">
+		<Stave Name="s0c2" Build="X" Instr="" Condition="pos!0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="2">
 			<Note Column="1" Fxl="1" Pos="0" Pow="S"/>
 			<Note Column="2" Fxl="5" Pos="7" Pow="9"/>
 			<Note Column="0" Fxl="1" Pos="d" Pow="u"/>
 		</Stave>
-		<Stave Name="Nmm" Build="Y" Condition="pos#0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="3">
+		<Stave Name="Nmm" Build="Y" Instr="" Condition="pos#0" Type="Module" ZeroLength="False" Sequence="" Parameter="" Sample="" Expression="" Index="3">
 			<Note Column="1" Fxl="4" Pos="A" Pow="D"/>
 			<Note Column="2" Fxl="1" Pos="0" Pow="S"/>
 			<Note Column="3" Fxl="1" Pos="0" Pow="x"/>
 			<Note Column="0" Fxl="1" Pos="2" Pow="3"/>
 		</Stave>
+		<Instr Name="* New *" Type="Sequence" Sequence="" Parameter="" Sample="" Expression=""/>
+		<Build Name="Drums bb"/>
 	</Part>
 </Score>
