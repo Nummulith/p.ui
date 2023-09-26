@@ -151,6 +151,10 @@ class Part:
         self.BuildPos = True
         self.BuildPow = False
 
+        self.Fxl = ""
+        self.Pos = ""
+        self.Pow = ""
+
     def View(self):
         return self.Name
     
@@ -174,6 +178,7 @@ class Instr:
     def __init__(self, Name=""):
         self.Name  = Name
         self.Type = "Module"
+        self.Module = ""
         self.Sequence = ""
         self.Parameter = ""
         self.Sample = ""

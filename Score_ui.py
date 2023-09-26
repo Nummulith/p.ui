@@ -25,7 +25,7 @@ class Ui_pApp(object):
     def setupUi(self, pApp):
         if not pApp.objectName():
             pApp.setObjectName(u"pApp")
-        pApp.resize(1346, 808)
+        pApp.resize(1568, 808)
         self.centralwidget = QWidget(pApp)
         self.centralwidget.setObjectName(u"centralwidget")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -55,8 +55,8 @@ class Ui_pApp(object):
         self.PanelsLayout.setObjectName(u"PanelsLayout")
         self.frame0 = QFrame(self.PanelsLayout_2)
         self.frame0.setObjectName(u"frame0")
-        sizePolicy1.setHeightForWidth(self.frame0.sizePolicy().hasHeightForWidth())
-        self.frame0.setSizePolicy(sizePolicy1)
+        sizePolicy.setHeightForWidth(self.frame0.sizePolicy().hasHeightForWidth())
+        self.frame0.setSizePolicy(sizePolicy)
         self.frame0.setFrameShape(QFrame.StyledPanel)
         self.verticalLayout_4 = QVBoxLayout(self.frame0)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
@@ -121,28 +121,8 @@ class Ui_pApp(object):
 
         self.verticalLayout_3.addWidget(self.label_2)
 
-        self.horizontalLayout = QHBoxLayout()
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.label = QLabel(self.frame1)
-        self.label.setObjectName(u"label")
-
-        self.horizontalLayout.addWidget(self.label)
-
-        self.PartsListAdd = QPushButton(self.frame1)
-        self.PartsListAdd.setObjectName(u"PartsListAdd")
-        self.PartsListAdd.setMaximumSize(QSize(26, 32))
-
-        self.horizontalLayout.addWidget(self.PartsListAdd)
-
-        self.PartsListDel = QPushButton(self.frame1)
-        self.PartsListDel.setObjectName(u"PartsListDel")
-        self.PartsListDel.setMaximumSize(QSize(26, 32))
-
-        self.horizontalLayout.addWidget(self.PartsListDel)
-
-
-        self.verticalLayout_3.addLayout(self.horizontalLayout)
-
+        self.horizontalLayout_10 = QHBoxLayout()
+        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.PartsList = QListWidget(self.frame1)
         self.PartsList.setObjectName(u"PartsList")
         sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -152,7 +132,27 @@ class Ui_pApp(object):
         self.PartsList.setSizePolicy(sizePolicy2)
         self.PartsList.setMinimumSize(QSize(0, 200))
 
-        self.verticalLayout_3.addWidget(self.PartsList)
+        self.horizontalLayout_10.addWidget(self.PartsList)
+
+        self.verticalLayout_15 = QVBoxLayout()
+        self.verticalLayout_15.setObjectName(u"verticalLayout_15")
+        self.PartsListAdd = QPushButton(self.frame1)
+        self.PartsListAdd.setObjectName(u"PartsListAdd")
+        self.PartsListAdd.setMaximumSize(QSize(26, 32))
+
+        self.verticalLayout_15.addWidget(self.PartsListAdd)
+
+        self.PartsListDel = QPushButton(self.frame1)
+        self.PartsListDel.setObjectName(u"PartsListDel")
+        self.PartsListDel.setMaximumSize(QSize(26, 32))
+
+        self.verticalLayout_15.addWidget(self.PartsListDel)
+
+
+        self.horizontalLayout_10.addLayout(self.verticalLayout_15)
+
+
+        self.verticalLayout_3.addLayout(self.horizontalLayout_10)
 
         self.Part_Name = QLineEdit(self.frame1)
         self.Part_Name.setObjectName(u"Part_Name")
@@ -250,37 +250,92 @@ class Ui_pApp(object):
 
         self.verticalLayout_3.addWidget(self.Part_ColumnWidth)
 
-        self.horizontalLayout_6 = QHBoxLayout()
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.label_26 = QLabel(self.frame1)
-        self.label_26.setObjectName(u"label_26")
-
-        self.horizontalLayout_6.addWidget(self.label_26)
-
-        self.Part_BuildFxl = QCheckBox(self.frame1)
-        self.Part_BuildFxl.setObjectName(u"Part_BuildFxl")
-
-        self.horizontalLayout_6.addWidget(self.Part_BuildFxl)
-
-        self.Part_BuildPos = QCheckBox(self.frame1)
-        self.Part_BuildPos.setObjectName(u"Part_BuildPos")
-
-        self.horizontalLayout_6.addWidget(self.Part_BuildPos)
-
-        self.Part_BuildPow = QCheckBox(self.frame1)
-        self.Part_BuildPow.setObjectName(u"Part_BuildPow")
-
-        self.horizontalLayout_6.addWidget(self.Part_BuildPow)
-
-
-        self.verticalLayout_3.addLayout(self.horizontalLayout_6)
-
         self.verticalSpacer_11 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_3.addItem(self.verticalSpacer_11)
 
 
         self.PanelsLayout.addWidget(self.frame1)
+
+        self.frame = QFrame(self.PanelsLayout_2)
+        self.frame.setObjectName(u"frame")
+        sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
+        self.frame.setSizePolicy(sizePolicy)
+        self.frame.setFrameShape(QFrame.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Plain)
+        self.verticalLayout_20 = QVBoxLayout(self.frame)
+        self.verticalLayout_20.setObjectName(u"verticalLayout_20")
+        self.label = QLabel(self.frame)
+        self.label.setObjectName(u"label")
+
+        self.verticalLayout_20.addWidget(self.label)
+
+        self.horizontalLayout_7 = QHBoxLayout()
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.label_26 = QLabel(self.frame)
+        self.label_26.setObjectName(u"label_26")
+
+        self.horizontalLayout_7.addWidget(self.label_26)
+
+        self.label_6 = QLabel(self.frame)
+        self.label_6.setObjectName(u"label_6")
+
+        self.horizontalLayout_7.addWidget(self.label_6)
+
+        self.label_8 = QLabel(self.frame)
+        self.label_8.setObjectName(u"label_8")
+
+        self.horizontalLayout_7.addWidget(self.label_8)
+
+
+        self.verticalLayout_20.addLayout(self.horizontalLayout_7)
+
+        self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.Part_BuildFxl = QCheckBox(self.frame)
+        self.Part_BuildFxl.setObjectName(u"Part_BuildFxl")
+
+        self.horizontalLayout_6.addWidget(self.Part_BuildFxl)
+
+        self.Part_BuildPos = QCheckBox(self.frame)
+        self.Part_BuildPos.setObjectName(u"Part_BuildPos")
+
+        self.horizontalLayout_6.addWidget(self.Part_BuildPos)
+
+        self.Part_BuildPow = QCheckBox(self.frame)
+        self.Part_BuildPow.setObjectName(u"Part_BuildPow")
+
+        self.horizontalLayout_6.addWidget(self.Part_BuildPow)
+
+
+        self.verticalLayout_20.addLayout(self.horizontalLayout_6)
+
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.Part_Fxl = QLineEdit(self.frame)
+        self.Part_Fxl.setObjectName(u"Part_Fxl")
+
+        self.horizontalLayout.addWidget(self.Part_Fxl)
+
+        self.Part_Pos = QLineEdit(self.frame)
+        self.Part_Pos.setObjectName(u"Part_Pos")
+
+        self.horizontalLayout.addWidget(self.Part_Pos)
+
+        self.Part_Pow = QLineEdit(self.frame)
+        self.Part_Pow.setObjectName(u"Part_Pow")
+
+        self.horizontalLayout.addWidget(self.Part_Pow)
+
+
+        self.verticalLayout_20.addLayout(self.horizontalLayout)
+
+        self.verticalSpacer_13 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_20.addItem(self.verticalSpacer_13)
+
+
+        self.PanelsLayout.addWidget(self.frame)
 
         self.frame2 = QFrame(self.PanelsLayout_2)
         self.frame2.setObjectName(u"frame2")
@@ -296,35 +351,35 @@ class Ui_pApp(object):
 
         self.verticalLayout_13.addWidget(self.label_13)
 
-        self.horizontalLayout_7 = QHBoxLayout()
-        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
-        self.label_6 = QLabel(self.frame2)
-        self.label_6.setObjectName(u"label_6")
-
-        self.horizontalLayout_7.addWidget(self.label_6)
-
-        self.InstrsListAdd = QPushButton(self.frame2)
-        self.InstrsListAdd.setObjectName(u"InstrsListAdd")
-        self.InstrsListAdd.setMaximumSize(QSize(26, 32))
-
-        self.horizontalLayout_7.addWidget(self.InstrsListAdd)
-
-        self.InstrsListDel = QPushButton(self.frame2)
-        self.InstrsListDel.setObjectName(u"InstrsListDel")
-        self.InstrsListDel.setMaximumSize(QSize(26, 32))
-
-        self.horizontalLayout_7.addWidget(self.InstrsListDel)
-
-
-        self.verticalLayout_13.addLayout(self.horizontalLayout_7)
-
+        self.horizontalLayout_11 = QHBoxLayout()
+        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
         self.InstrsList = QListWidget(self.frame2)
         self.InstrsList.setObjectName(u"InstrsList")
         sizePolicy2.setHeightForWidth(self.InstrsList.sizePolicy().hasHeightForWidth())
         self.InstrsList.setSizePolicy(sizePolicy2)
         self.InstrsList.setMinimumSize(QSize(0, 200))
 
-        self.verticalLayout_13.addWidget(self.InstrsList)
+        self.horizontalLayout_11.addWidget(self.InstrsList)
+
+        self.verticalLayout_16 = QVBoxLayout()
+        self.verticalLayout_16.setObjectName(u"verticalLayout_16")
+        self.InstrsListAdd = QPushButton(self.frame2)
+        self.InstrsListAdd.setObjectName(u"InstrsListAdd")
+        self.InstrsListAdd.setMaximumSize(QSize(26, 32))
+
+        self.verticalLayout_16.addWidget(self.InstrsListAdd)
+
+        self.InstrsListDel = QPushButton(self.frame2)
+        self.InstrsListDel.setObjectName(u"InstrsListDel")
+        self.InstrsListDel.setMaximumSize(QSize(26, 32))
+
+        self.verticalLayout_16.addWidget(self.InstrsListDel)
+
+
+        self.horizontalLayout_11.addLayout(self.verticalLayout_16)
+
+
+        self.verticalLayout_13.addLayout(self.horizontalLayout_11)
 
         self.Instr_Name = QLineEdit(self.frame2)
         self.Instr_Name.setObjectName(u"Instr_Name")
@@ -452,33 +507,33 @@ class Ui_pApp(object):
 
         self.horizontalLayout_8 = QHBoxLayout()
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.label_8 = QLabel(self.frame3)
-        self.label_8.setObjectName(u"label_8")
-
-        self.horizontalLayout_8.addWidget(self.label_8)
-
-        self.BuildsListAdd = QPushButton(self.frame3)
-        self.BuildsListAdd.setObjectName(u"BuildsListAdd")
-        self.BuildsListAdd.setMaximumSize(QSize(26, 32))
-
-        self.horizontalLayout_8.addWidget(self.BuildsListAdd)
-
-        self.BuildsListDel = QPushButton(self.frame3)
-        self.BuildsListDel.setObjectName(u"BuildsListDel")
-        self.BuildsListDel.setMaximumSize(QSize(26, 32))
-
-        self.horizontalLayout_8.addWidget(self.BuildsListDel)
-
-
-        self.verticalLayout_14.addLayout(self.horizontalLayout_8)
-
         self.BuildsList = QListWidget(self.frame3)
         self.BuildsList.setObjectName(u"BuildsList")
         sizePolicy2.setHeightForWidth(self.BuildsList.sizePolicy().hasHeightForWidth())
         self.BuildsList.setSizePolicy(sizePolicy2)
         self.BuildsList.setMinimumSize(QSize(0, 200))
 
-        self.verticalLayout_14.addWidget(self.BuildsList)
+        self.horizontalLayout_8.addWidget(self.BuildsList)
+
+        self.verticalLayout_17 = QVBoxLayout()
+        self.verticalLayout_17.setObjectName(u"verticalLayout_17")
+        self.BuildsListAdd = QPushButton(self.frame3)
+        self.BuildsListAdd.setObjectName(u"BuildsListAdd")
+        self.BuildsListAdd.setMaximumSize(QSize(26, 32))
+
+        self.verticalLayout_17.addWidget(self.BuildsListAdd)
+
+        self.BuildsListDel = QPushButton(self.frame3)
+        self.BuildsListDel.setObjectName(u"BuildsListDel")
+        self.BuildsListDel.setMaximumSize(QSize(26, 32))
+
+        self.verticalLayout_17.addWidget(self.BuildsListDel)
+
+
+        self.horizontalLayout_8.addLayout(self.verticalLayout_17)
+
+
+        self.verticalLayout_14.addLayout(self.horizontalLayout_8)
 
         self.Build_Name = QLineEdit(self.frame3)
         self.Build_Name.setObjectName(u"Build_Name")
@@ -506,33 +561,33 @@ class Ui_pApp(object):
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.label_11 = QLabel(self.frame4)
-        self.label_11.setObjectName(u"label_11")
-
-        self.horizontalLayout_4.addWidget(self.label_11)
-
-        self.StavesListAdd = QPushButton(self.frame4)
-        self.StavesListAdd.setObjectName(u"StavesListAdd")
-        self.StavesListAdd.setMaximumSize(QSize(26, 32))
-
-        self.horizontalLayout_4.addWidget(self.StavesListAdd)
-
-        self.StavesListDel = QPushButton(self.frame4)
-        self.StavesListDel.setObjectName(u"StavesListDel")
-        self.StavesListDel.setMaximumSize(QSize(26, 32))
-
-        self.horizontalLayout_4.addWidget(self.StavesListDel)
-
-
-        self.verticalLayout_6.addLayout(self.horizontalLayout_4)
-
         self.StavesList = QListWidget(self.frame4)
         self.StavesList.setObjectName(u"StavesList")
         sizePolicy2.setHeightForWidth(self.StavesList.sizePolicy().hasHeightForWidth())
         self.StavesList.setSizePolicy(sizePolicy2)
         self.StavesList.setMinimumSize(QSize(0, 200))
 
-        self.verticalLayout_6.addWidget(self.StavesList)
+        self.horizontalLayout_4.addWidget(self.StavesList)
+
+        self.verticalLayout_18 = QVBoxLayout()
+        self.verticalLayout_18.setObjectName(u"verticalLayout_18")
+        self.StavesListAdd = QPushButton(self.frame4)
+        self.StavesListAdd.setObjectName(u"StavesListAdd")
+        self.StavesListAdd.setMaximumSize(QSize(26, 32))
+
+        self.verticalLayout_18.addWidget(self.StavesListAdd)
+
+        self.StavesListDel = QPushButton(self.frame4)
+        self.StavesListDel.setObjectName(u"StavesListDel")
+        self.StavesListDel.setMaximumSize(QSize(26, 32))
+
+        self.verticalLayout_18.addWidget(self.StavesListDel)
+
+
+        self.horizontalLayout_4.addLayout(self.verticalLayout_18)
+
+
+        self.verticalLayout_6.addLayout(self.horizontalLayout_4)
 
         self.Stave_Name = QLineEdit(self.frame4)
         self.Stave_Name.setObjectName(u"Stave_Name")
@@ -548,6 +603,16 @@ class Ui_pApp(object):
         self.Stave_Build.setObjectName(u"Stave_Build")
 
         self.verticalLayout_6.addWidget(self.Stave_Build)
+
+        self.label_27 = QLabel(self.frame4)
+        self.label_27.setObjectName(u"label_27")
+
+        self.verticalLayout_6.addWidget(self.label_27)
+
+        self.Stave_Instr = QLineEdit(self.frame4)
+        self.Stave_Instr.setObjectName(u"Stave_Instr")
+
+        self.verticalLayout_6.addWidget(self.Stave_Instr)
 
         self.label_17 = QLabel(self.frame4)
         self.label_17.setObjectName(u"label_17")
@@ -580,26 +645,6 @@ class Ui_pApp(object):
 
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.label_12 = QLabel(self.frame5)
-        self.label_12.setObjectName(u"label_12")
-
-        self.horizontalLayout_5.addWidget(self.label_12)
-
-        self.NotesListAdd = QPushButton(self.frame5)
-        self.NotesListAdd.setObjectName(u"NotesListAdd")
-        self.NotesListAdd.setMaximumSize(QSize(26, 32))
-
-        self.horizontalLayout_5.addWidget(self.NotesListAdd)
-
-        self.NotesListDel = QPushButton(self.frame5)
-        self.NotesListDel.setObjectName(u"NotesListDel")
-        self.NotesListDel.setMaximumSize(QSize(26, 32))
-
-        self.horizontalLayout_5.addWidget(self.NotesListDel)
-
-
-        self.verticalLayout_2.addLayout(self.horizontalLayout_5)
-
         self.NotesList = QListWidget(self.frame5)
         self.NotesList.setObjectName(u"NotesList")
         sizePolicy2.setHeightForWidth(self.NotesList.sizePolicy().hasHeightForWidth())
@@ -607,17 +652,52 @@ class Ui_pApp(object):
         self.NotesList.setMinimumSize(QSize(0, 200))
         self.NotesList.setMaximumSize(QSize(16777215, 200))
 
-        self.verticalLayout_2.addWidget(self.NotesList)
+        self.horizontalLayout_5.addWidget(self.NotesList)
+
+        self.verticalLayout_19 = QVBoxLayout()
+        self.verticalLayout_19.setObjectName(u"verticalLayout_19")
+        self.NotesListAdd = QPushButton(self.frame5)
+        self.NotesListAdd.setObjectName(u"NotesListAdd")
+        self.NotesListAdd.setMaximumSize(QSize(26, 32))
+
+        self.verticalLayout_19.addWidget(self.NotesListAdd)
+
+        self.NotesListDel = QPushButton(self.frame5)
+        self.NotesListDel.setObjectName(u"NotesListDel")
+        self.NotesListDel.setMaximumSize(QSize(26, 32))
+
+        self.verticalLayout_19.addWidget(self.NotesListDel)
+
+
+        self.horizontalLayout_5.addLayout(self.verticalLayout_19)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_5)
 
         self.Note_Column = QSpinBox(self.frame5)
         self.Note_Column.setObjectName(u"Note_Column")
 
         self.verticalLayout_2.addWidget(self.Note_Column)
 
+        self.horizontalLayout_12 = QHBoxLayout()
+        self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
         self.label_14 = QLabel(self.frame5)
         self.label_14.setObjectName(u"label_14")
 
-        self.verticalLayout_2.addWidget(self.label_14)
+        self.horizontalLayout_12.addWidget(self.label_14)
+
+        self.label_11 = QLabel(self.frame5)
+        self.label_11.setObjectName(u"label_11")
+
+        self.horizontalLayout_12.addWidget(self.label_11)
+
+        self.label_12 = QLabel(self.frame5)
+        self.label_12.setObjectName(u"label_12")
+
+        self.horizontalLayout_12.addWidget(self.label_12)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_12)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
@@ -720,8 +800,7 @@ class Ui_pApp(object):
         self.bScoreLoad.setText(QCoreApplication.translate("pApp", u"Load", None))
         self.bScoreSave.setText(QCoreApplication.translate("pApp", u"Save", None))
         self.bRun.setText(QCoreApplication.translate("pApp", u"Run", None))
-        self.label_2.setText(QCoreApplication.translate("pApp", u"Partiture", None))
-        self.label.setText(QCoreApplication.translate("pApp", u"Partitures", None))
+        self.label_2.setText(QCoreApplication.translate("pApp", u"Partitures", None))
         self.PartsListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
         self.PartsListDel.setText(QCoreApplication.translate("pApp", u"-", None))
         self.Part_ZeroLength.setText(QCoreApplication.translate("pApp", u"Zero Length", None))
@@ -734,12 +813,14 @@ class Ui_pApp(object):
         self.label_3.setText(QCoreApplication.translate("pApp", u"/", None))
         self.Part_ColumnWidth.setTabText(self.Part_ColumnWidth.indexOf(self.Part_ColumnWidth_Fixed), QCoreApplication.translate("pApp", u"Fixed", None))
         self.Part_ColumnWidth.setTabText(self.Part_ColumnWidth.indexOf(self.Part_ColumnWidth_Calculated), QCoreApplication.translate("pApp", u"Calculated", None))
-        self.label_26.setText(QCoreApplication.translate("pApp", u"Build fpp", None))
+        self.label.setText(QCoreApplication.translate("pApp", u"Build", None))
+        self.label_26.setText(QCoreApplication.translate("pApp", u"Fxl", None))
+        self.label_6.setText(QCoreApplication.translate("pApp", u"Pos", None))
+        self.label_8.setText(QCoreApplication.translate("pApp", u"Pow", None))
         self.Part_BuildFxl.setText("")
         self.Part_BuildPos.setText("")
         self.Part_BuildPow.setText("")
-        self.label_13.setText(QCoreApplication.translate("pApp", u"Instrument", None))
-        self.label_6.setText(QCoreApplication.translate("pApp", u"Instruments", None))
+        self.label_13.setText(QCoreApplication.translate("pApp", u"Instruments", None))
         self.InstrsListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
         self.InstrsListDel.setText(QCoreApplication.translate("pApp", u"-", None))
         self.label_19.setText(QCoreApplication.translate("pApp", u"File", None))
@@ -751,21 +832,21 @@ class Ui_pApp(object):
         self.Instr_Type.setTabText(self.Instr_Type.indexOf(self.Instr_Type_Sample), QCoreApplication.translate("pApp", u"Sample", None))
         self.label_23.setText(QCoreApplication.translate("pApp", u"Expression", None))
         self.Instr_Type.setTabText(self.Instr_Type.indexOf(self.Instr_Type_Expression), QCoreApplication.translate("pApp", u"Expression", None))
-        self.label_15.setText(QCoreApplication.translate("pApp", u"Build", None))
-        self.label_8.setText(QCoreApplication.translate("pApp", u"Builds", None))
+        self.label_15.setText(QCoreApplication.translate("pApp", u"Builds", None))
         self.BuildsListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
         self.BuildsListDel.setText(QCoreApplication.translate("pApp", u"-", None))
-        self.label_4.setText(QCoreApplication.translate("pApp", u"Stave", None))
-        self.label_11.setText(QCoreApplication.translate("pApp", u"Staves", None))
+        self.label_4.setText(QCoreApplication.translate("pApp", u"Staves", None))
         self.StavesListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
         self.StavesListDel.setText(QCoreApplication.translate("pApp", u"-", None))
         self.label_16.setText(QCoreApplication.translate("pApp", u"Build", None))
+        self.label_27.setText(QCoreApplication.translate("pApp", u"Instrument", None))
         self.label_17.setText(QCoreApplication.translate("pApp", u"Condition", None))
-        self.label_5.setText(QCoreApplication.translate("pApp", u"Note", None))
-        self.label_12.setText(QCoreApplication.translate("pApp", u"Notes", None))
+        self.label_5.setText(QCoreApplication.translate("pApp", u"Notes", None))
         self.NotesListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
         self.NotesListDel.setText(QCoreApplication.translate("pApp", u"-", None))
-        self.label_14.setText(QCoreApplication.translate("pApp", u"Fxl, Pos, Pow", None))
+        self.label_14.setText(QCoreApplication.translate("pApp", u"Fxl", None))
+        self.label_11.setText(QCoreApplication.translate("pApp", u"Pos", None))
+        self.label_12.setText(QCoreApplication.translate("pApp", u"Pow", None))
         self.label_18.setText(QCoreApplication.translate("pApp", u"Matrix", None))
         ___qtablewidgetitem = self.StavesTable.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("pApp", u"0", None));
