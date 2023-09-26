@@ -25,7 +25,7 @@ class Ui_pApp(object):
     def setupUi(self, pApp):
         if not pApp.objectName():
             pApp.setObjectName(u"pApp")
-        pApp.resize(1250, 693)
+        pApp.resize(1346, 808)
         self.centralwidget = QWidget(pApp)
         self.centralwidget.setObjectName(u"centralwidget")
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -159,6 +159,11 @@ class Ui_pApp(object):
 
         self.verticalLayout_3.addWidget(self.Part_Name)
 
+        self.Part_ZeroLength = QCheckBox(self.frame1)
+        self.Part_ZeroLength.setObjectName(u"Part_ZeroLength")
+
+        self.verticalLayout_3.addWidget(self.Part_ZeroLength)
+
         self.Part_Role = QTabWidget(self.frame1)
         self.Part_Role.setObjectName(u"Part_Role")
         self.Part_Role.setMaximumSize(QSize(1000, 150))
@@ -206,25 +211,44 @@ class Ui_pApp(object):
 
         self.verticalLayout_3.addWidget(self.Part_Role)
 
-        self.label_3 = QLabel(self.frame1)
-        self.label_3.setObjectName(u"label_3")
-
-        self.verticalLayout_3.addWidget(self.label_3)
-
-        self.Part_Numerator = QSpinBox(self.frame1)
-        self.Part_Numerator.setObjectName(u"Part_Numerator")
-
-        self.verticalLayout_3.addWidget(self.Part_Numerator)
-
         self.label_9 = QLabel(self.frame1)
         self.label_9.setObjectName(u"label_9")
 
         self.verticalLayout_3.addWidget(self.label_9)
 
-        self.Part_Denominator = QSpinBox(self.frame1)
+        self.Part_ColumnWidth = QTabWidget(self.frame1)
+        self.Part_ColumnWidth.setObjectName(u"Part_ColumnWidth")
+        self.Part_ColumnWidth_Fixed = QWidget()
+        self.Part_ColumnWidth_Fixed.setObjectName(u"Part_ColumnWidth_Fixed")
+        self.horizontalLayout_9 = QHBoxLayout(self.Part_ColumnWidth_Fixed)
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.Part_Numerator = QSpinBox(self.Part_ColumnWidth_Fixed)
+        self.Part_Numerator.setObjectName(u"Part_Numerator")
+
+        self.horizontalLayout_9.addWidget(self.Part_Numerator)
+
+        self.label_3 = QLabel(self.Part_ColumnWidth_Fixed)
+        self.label_3.setObjectName(u"label_3")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.label_3.sizePolicy().hasHeightForWidth())
+        self.label_3.setSizePolicy(sizePolicy3)
+        self.label_3.setMinimumSize(QSize(10, 0))
+
+        self.horizontalLayout_9.addWidget(self.label_3)
+
+        self.Part_Denominator = QSpinBox(self.Part_ColumnWidth_Fixed)
         self.Part_Denominator.setObjectName(u"Part_Denominator")
 
-        self.verticalLayout_3.addWidget(self.Part_Denominator)
+        self.horizontalLayout_9.addWidget(self.Part_Denominator)
+
+        self.Part_ColumnWidth.addTab(self.Part_ColumnWidth_Fixed, "")
+        self.Part_ColumnWidth_Calculated = QWidget()
+        self.Part_ColumnWidth_Calculated.setObjectName(u"Part_ColumnWidth_Calculated")
+        self.Part_ColumnWidth.addTab(self.Part_ColumnWidth_Calculated, "")
+
+        self.verticalLayout_3.addWidget(self.Part_ColumnWidth)
 
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
@@ -309,11 +333,11 @@ class Ui_pApp(object):
 
         self.Instr_Type = QTabWidget(self.frame2)
         self.Instr_Type.setObjectName(u"Instr_Type")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.Instr_Type.sizePolicy().hasHeightForWidth())
-        self.Instr_Type.setSizePolicy(sizePolicy3)
+        sizePolicy4 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(0)
+        sizePolicy4.setHeightForWidth(self.Instr_Type.sizePolicy().hasHeightForWidth())
+        self.Instr_Type.setSizePolicy(sizePolicy4)
         self.Instr_Type.setMinimumSize(QSize(290, 0))
         self.Instr_Type.setMaximumSize(QSize(6000, 200))
         self.Instr_Type.setBaseSize(QSize(0, 0))
@@ -330,11 +354,6 @@ class Ui_pApp(object):
         self.Instr_Module.setObjectName(u"Instr_Module")
 
         self.verticalLayout_7.addWidget(self.Instr_Module)
-
-        self.Instr_ZeroLength = QCheckBox(self.Instr_Type_Module)
-        self.Instr_ZeroLength.setObjectName(u"Instr_ZeroLength")
-
-        self.verticalLayout_7.addWidget(self.Instr_ZeroLength)
 
         self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
@@ -687,7 +706,8 @@ class Ui_pApp(object):
         self.retranslateUi(pApp)
 
         self.Part_Role.setCurrentIndex(0)
-        self.Instr_Type.setCurrentIndex(2)
+        self.Part_ColumnWidth.setCurrentIndex(0)
+        self.Instr_Type.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(pApp)
@@ -704,13 +724,16 @@ class Ui_pApp(object):
         self.label.setText(QCoreApplication.translate("pApp", u"Partitures", None))
         self.PartsListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
         self.PartsListDel.setText(QCoreApplication.translate("pApp", u"-", None))
+        self.Part_ZeroLength.setText(QCoreApplication.translate("pApp", u"Zero Length", None))
         self.label_24.setText(QCoreApplication.translate("pApp", u"Pitch", None))
         self.Part_Role.setTabText(self.Part_Role.indexOf(self.Part_Role_Main), QCoreApplication.translate("pApp", u"Main", None))
         self.label_25.setText(QCoreApplication.translate("pApp", u"Transpose", None))
         self.Part_Role.setTabText(self.Part_Role.indexOf(self.Part_Role_Function), QCoreApplication.translate("pApp", u"Function", None))
         self.Part_Role.setTabText(self.Part_Role.indexOf(self.Part_Role_None), QCoreApplication.translate("pApp", u"None", None))
-        self.label_3.setText(QCoreApplication.translate("pApp", u"Numerator", None))
-        self.label_9.setText(QCoreApplication.translate("pApp", u"Denominator", None))
+        self.label_9.setText(QCoreApplication.translate("pApp", u"Column width", None))
+        self.label_3.setText(QCoreApplication.translate("pApp", u"/", None))
+        self.Part_ColumnWidth.setTabText(self.Part_ColumnWidth.indexOf(self.Part_ColumnWidth_Fixed), QCoreApplication.translate("pApp", u"Fixed", None))
+        self.Part_ColumnWidth.setTabText(self.Part_ColumnWidth.indexOf(self.Part_ColumnWidth_Calculated), QCoreApplication.translate("pApp", u"Calculated", None))
         self.label_26.setText(QCoreApplication.translate("pApp", u"Build fpp", None))
         self.Part_BuildFxl.setText("")
         self.Part_BuildPos.setText("")
@@ -720,7 +743,6 @@ class Ui_pApp(object):
         self.InstrsListAdd.setText(QCoreApplication.translate("pApp", u"+", None))
         self.InstrsListDel.setText(QCoreApplication.translate("pApp", u"-", None))
         self.label_19.setText(QCoreApplication.translate("pApp", u"File", None))
-        self.Instr_ZeroLength.setText(QCoreApplication.translate("pApp", u"Zero Length", None))
         self.Instr_Type.setTabText(self.Instr_Type.indexOf(self.Instr_Type_Module), QCoreApplication.translate("pApp", u"Module", None))
         self.label_20.setText(QCoreApplication.translate("pApp", u"Sequence", None))
         self.label_21.setText(QCoreApplication.translate("pApp", u"Parameter", None))

@@ -136,12 +136,16 @@ class Part:
         self.Instrs = []
         self.Builds = []
 
-        self.Name = Name
-        self.Numerator = Numerator
-        self.Denominator = Denominator
+        self.Name = Name        
         self.Role = "Function"
         self.Pitch = 0
         self.Transpose = 0
+
+        self.ZeroLength = False
+
+        self.ColumnWidth = "Calculated"
+        self.Numerator = Numerator
+        self.Denominator = Denominator
 
         self.BuildFxl = True
         self.BuildPos = True
@@ -216,12 +220,6 @@ class Stave:
         self.Build = ""
         self.Instr = ""
         self.Condition = ""
-        self.Type = "Module"
-        self.ZeroLength = False
-        self.Sequence = ""
-        self.Parameter = ""
-        self.Sample = ""
-        self.Expression = ""
 
     def GetItems(self, clss):
         return self.Items
@@ -298,6 +296,7 @@ class Map:
 
     def FillModel(self, items):
         self.Mapper.model().clear()
+
         for inst in items:
             self.Mapper.model().appendRow([QtGui.QStandardItem(str(getattr(inst, value))) for value in self.Dict])
 
@@ -321,12 +320,26 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         obj = self.Objs[clss.prev()]
         items = obj.GetItems(clss)
 
-        items.append(clss("* New *"))
-        self.Position([clss.prev()], True)
+        items.append(clss("* New *" if clss != Note else 0))
+
+        self.Position([clss], True)
 
 
     def AddHandler(self, clss):
         return lambda res0 = None, c=clss: self.Add(res0, c)
+
+    def Del(self, res0, clss):
+        obj = self.Objs[clss.prev()]
+        items = obj.GetItems(clss)
+        wgt = self.Maps[clss].List
+
+        del items[wgt.currentRow()]
+
+        self.Position([clss], True)
+
+
+    def DelHandler(self, clss):
+        return lambda res0 = None, c=clss: self.Del(res0, c)
 
     def __init__(self):
         super().__init__()
@@ -364,6 +377,12 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
         self.InstrsListAdd.clicked.connect(self.AddHandler(Instr))
         self.BuildsListAdd.clicked.connect(self.AddHandler(Build))
         self.NotesListAdd .clicked.connect(self.AddHandler(Note ))
+
+        self.PartsListDel .clicked.connect(self.DelHandler(Part ))
+        self.StavesListDel.clicked.connect(self.DelHandler(Stave))
+        self.InstrsListDel.clicked.connect(self.DelHandler(Instr))
+        self.BuildsListDel.clicked.connect(self.DelHandler(Build))
+        self.NotesListDel .clicked.connect(self.DelHandler(Note ))
 
 
         # visibility buttons 
@@ -449,17 +468,17 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
             else: #if clss != Note 
                 par = self.Objs[clss.prev()]
 
-                items = par.GetItems(clss)
+                items = par.GetItems(clss) if par != None else []
                 indexed = not (clss == Build or clss == Instr)
 
                 if index == None:
-                    curind = int(par.Index) if indexed else -1
+                    curind = int(par.Index) if indexed and par != None else -1
                 else:
                     curind = index[0] if isinstance(index, list) else index
                     if indexed:
                         par.Index = curind
 
-            self.Objs[clss] = items[curind] if curind != -1 else None
+            self.Objs[clss] = items[curind] if curind >= 0 and curind < len(items) else None
 
             #empty = len(items) == 0
 
@@ -492,8 +511,9 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
                 if fillList:
                     self.InstrsList.clear()
 
-                    for instr in self.Objs[Part].Instrs :
-                        self.InstrsList.addItem(instr.Name)
+                    if self.Objs[Part] != None :
+                        for instr in self.Objs[Part].Instrs :
+                            self.InstrsList.addItem(instr.Name)
 
                 #self.BuildsList.setCurrentRow(curind)
 
@@ -506,8 +526,9 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
                 if fillList:
                     self.BuildsList.clear()
 
-                    for build in self.Objs[Part].Builds :
-                        self.BuildsList.addItem(build.Name)
+                    if self.Objs[Part] != None :
+                        for build in self.Objs[Part].Builds :
+                            self.BuildsList.addItem(build.Name)
 
                 #self.BuildsList.setCurrentRow(curind)
 
@@ -616,6 +637,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
     def DrawStavesTable(self):
         curscore = self.Score[0]
+        if int(curscore.Index) < 0 or int(curscore.Index) >= len(curscore.Items) : return
         curpart  = curscore.Items[int(curscore.Index)]
         
 #        if clss == Score or clss == Part :
@@ -659,7 +681,11 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
     def PosStavesTable(self):
         curscore = self.Score[0]
+
+        if int(curscore.Index) == -1 : return
         curpart  = curscore.Items[int(curscore.Index)]
+
+        if int(curpart .Index) == -1 : return
         curstave = curpart .Items[int(curpart .Index)]
 
         if curstave.Index != -1:
@@ -708,7 +734,7 @@ class Window(QtWidgets.QMainWindow, uic.loadUiType('Score.ui')[0]):
 
 
     def Run(self):
-        with open('template.j2', 'r') as file: template_str = file.read()
+        with open('Score.j2', 'r') as file: template_str = file.read()
 
         template_str = "".join([line.strip() for line in template_str.splitlines()])
 
