@@ -1,0 +1,83 @@
+{# Intro #}
+{{ "$( [Intro]\n" }}
+
+{% if part.Role == "Main" %}
+    {{ "l = Eval(\n" }}
+    {{ "\t" + "FileText(FileDir(GetAppName) + \"\\..\\plWave\\plWave.p\"), \n" }}
+    {{ "\t" + "FileDir(GetAppName) + \"\\shm\\shm.pi\", \"plWave\" \n" }}
+    {{ "); l = l; \n\n" }}
+    {{ "ton _ 0.0;\n" }}
+
+{% elif part.Role == "Function" %}
+    {{ "(l, len, ton, fxl, pos, pow){(\n\n" }}
+    {{ "mtn = ton + 12. * " + part.Pitch|string + ";\n" }}
+
+{% elif part.Role == "None" %}
+{% endif %}
+
+{{ "\n" }}
+
+
+{% if part.Role == "Main" %}
+    {{ "len _ " + score.Duration|string + ";\n" }}
+{% endif %}
+{{ "tkt = len * " + part.Numerator|string + " : " + part.Denominator|string + ";\n" }}
+
+{{ "\n" }}
+
+
+{% set fpp = "" %}
+{% set bld = "" %}
+{% if part.BuildFxl %}
+    {% if bld != "" %}{% set bld = bld + " + \" \"" %}{% endif %}
+    {% set bld = bld + " + fxl" %}
+    {% set fpp = fpp + "fxl = \"" + part.Fxl + "\"; " %}
+{% endif %}
+{% if part.BuildPos %}
+    {% if bld != "" %}{% set bld = bld + " + \" \"" %}{% endif %}
+    {% set bld = bld + " + pos" %}
+    {% set fpp = fpp + "pos = \"" + part.Pos + "\"; " %}
+{% endif %}
+{% if part.BuildPow %}
+    {% if bld != "" %}{% set bld = bld + " + \" \"" %}{% endif %}
+    {% set bld = bld + " + pow" %}
+    {% set fpp = fpp + "pow = \"" + part.Pow + "\"; " %}
+{% endif %}
+
+{% if part.Role == "Main" %}
+    {{ fpp + "\n" }}
+{% endif %}
+{{ "bld = \"\"" + bld + ";\n" }}
+
+{{ "\n" }}
+
+
+{% for instr in part.Instrs %}
+    {% if instr.Type == "Module" %}
+        {% set fpp = [] %}
+        {% for stave in part.Items %}
+            {% if stave.Instr == instr.Name %}
+                {% for note in stave.Items %}
+                    {% set par = note.Fxl + "," + note.Pos + "," + note.Pow %}
+                    {% if par not in fpp %}
+                        {% set _ = fpp.append(par) %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        
+        {% for par in fpp %}
+            {% set mdl = instr.Name + par.replace(",", "") %}
+            {{ mdl + "Str = l.layer(l, #, \"" + instr.Module + "\", len, ton, \"" + par.replace(",", "\", \"") + "\", #, 1.00);\n" }}
+            {{ mdl + " _ " + mdl + "Str.Wave; " + mdl + "Len _ " + mdl + "Str.Length;\n" }}
+        {% endfor %}
+
+    {% elif instr.Type == "Sequence" %}
+        {{ instr.Name + " = seq" }}
+    {% elif instr.Type == "Sample" %}
+        {{ instr.Name + " = smp" }}
+    {% elif instr.Type == "Expression" %}
+        {{ instr.Name + " = exp" }}
+    {% endif %}
+    {{ "\n" }}
+{% endfor %}
